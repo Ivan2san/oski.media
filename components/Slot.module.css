@@ -1,0 +1,40 @@
+.img {
+  object-fit: cover;
+}
+
+.empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 9px,
+      rgba(242, 241, 237, 0.022) 9px 18px
+    ),
+    var(--surface);
+}
+
+/* Viewfinder brackets, drawn with one element via corner-only borders. */
+.frame {
+  position: absolute;
+  inset: 14px;
+  border: 1px dashed rgba(242, 241, 237, 0.14);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.hint {
+  position: relative;
+  max-width: 30ch;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--ink-34);
+}

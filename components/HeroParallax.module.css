@@ -1,0 +1,8 @@
+.layer {
+  position: absolute;
+  top: -14%;
+  left: 0;
+  right: 0;
+  height: 128%;
+  will-change: transform;
+}
