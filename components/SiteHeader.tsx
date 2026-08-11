@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "./Logo";
-import { NAV } from "@/content/site";
+import { NAV } from "@/lib/site";
 import styles from "./SiteHeader.module.css";
 
 export function SiteHeader() {

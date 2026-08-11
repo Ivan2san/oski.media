@@ -1,8 +1,31 @@
+/* The keyframes must be declared in this module, not globals.css: CSS Modules
+   rewrites the `animation-name` in .track to a scoped identifier, which can
+   only match a @keyframes block scoped by the same module. Pointing it at a
+   global name silently resolves to nothing and the strip sits still. */
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The club list is rendered twice; travelling exactly half the track
+       lands copy two where copy one started, so the loop has no seam. */
+    transform: translateX(-50%);
+  }
+}
+
 .rail {
   border-bottom: 1px solid var(--line);
   overflow: hidden;
   padding: 16px 0;
   background: var(--bg);
+  /* Names dissolve at the edges rather than being guillotined by the crop. */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 80px,
+    #000 calc(100% - 80px),
+    transparent
+  );
 }
 
 .track {
@@ -10,6 +33,7 @@
   width: max-content;
   /* Duration is set inline from the club count — see Ticker.tsx. */
   animation: ticker var(--ticker-duration, 34s) linear infinite;
+  will-change: transform;
   font-size: 15px;
   letter-spacing: 0.04em;
   line-height: 1;
@@ -31,6 +55,11 @@
 
 .dot {
   color: var(--accent);
+}
+
+/* Hovering holds a name still long enough to read it. */
+.rail:hover .track {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

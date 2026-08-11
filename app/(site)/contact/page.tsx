@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
-import { SITE, SOCIALS } from "@/content/site";
+import { getSite } from "@/lib/content";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -10,7 +10,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const site = await getSite();
+
   return (
     <main id="main" className={`fade-up ${styles.page}`}>
       <div className={styles.row}>
@@ -24,10 +26,10 @@ export default function ContactPage() {
           </p>
 
           <div className={styles.channels}>
-            <a href={`mailto:${SITE.email}`} className={`display display-66 ${styles.channel}`}>
-              {SITE.email}
+            <a href={`mailto:${site.email}`} className={`display display-66 ${styles.channel}`}>
+              {site.email}
             </a>
-            {SOCIALS.map((social) => (
+            {site.socials.map((social) => (
               <a
                 key={social.label}
                 href={social.href}

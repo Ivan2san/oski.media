@@ -1,14 +1,20 @@
 import { Logo } from "./Logo";
-import { SITE, SOCIALS } from "@/content/site";
+import type { Social } from "@/lib/content";
 import styles from "./SiteFooter.module.css";
 
-export function SiteFooter() {
+export function SiteFooter({
+  email,
+  socials,
+}: {
+  email: string;
+  socials: readonly Social[];
+}) {
   return (
     <footer className={styles.footer}>
       <Logo size={16} />
       <div className={styles.links}>
-        <a href={`mailto:${SITE.email}`}>Email</a>
-        {SOCIALS.map((social) => (
+        {email && <a href={`mailto:${email}`}>Email</a>}
+        {socials.map((social) => (
           <a
             key={social.label}
             href={social.href}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { WorkGrid } from "@/components/WorkGrid";
+import { getFilters, getProjects } from "@/lib/content";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -9,10 +10,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/work" },
 };
 
-export default function WorkPage() {
+export default async function WorkPage() {
+  const [projects, filters] = await Promise.all([getProjects(), getFilters()]);
+
   return (
     <main id="main" className={`fade-up ${styles.page}`}>
-      <WorkGrid />
+      <WorkGrid
+        projects={projects}
+        codes={filters.codes}
+        types={filters.types}
+      />
     </main>
   );
 }

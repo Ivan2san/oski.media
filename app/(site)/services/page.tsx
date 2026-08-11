@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SERVICES } from "@/content/projects";
+import { getServices } from "@/lib/content";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -10,17 +10,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services" },
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getServices();
+
   return (
     <main id="main" className={`fade-up ${styles.page}`}>
       <h1 className={`display ${styles.h1}`}>What I shoot</h1>
-      <p className={styles.lede}>
-        Three ways clubs usually work with me. Most seasons end up a mix — tell
-        me the fixture list and I&rsquo;ll put a quote together.
-      </p>
+      <p className={styles.lede}>{services.intro}</p>
 
       <div className={styles.grid}>
-        {SERVICES.map((service) => (
+        {services.items.map((service) => (
           <section key={service.num} className={styles.card}>
             <span className={styles.num}>{service.num}</span>
             <h2 className={`display display-64 ${styles.name}`}>

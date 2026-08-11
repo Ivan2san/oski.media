@@ -3,17 +3,22 @@ import { HeroParallax } from "@/components/HeroParallax";
 import { HeroShowreel } from "@/components/HeroShowreel";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Ticker } from "@/components/Ticker";
-import { FEATURED } from "@/content/projects";
-import { SITE } from "@/content/site";
+import { getClubs, getFeatured, getSite } from "@/lib/content";
 import cards from "@/components/ProjectCard.module.css";
 import styles from "./page.module.css";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [site, featured, clubs] = await Promise.all([
+    getSite(),
+    getFeatured(),
+    getClubs(),
+  ]);
+
   return (
     <main id="main">
       <section className={styles.hero}>
         <HeroParallax>
-          <HeroShowreel />
+          <HeroShowreel src={site.showreel} poster={site.showreelPoster} />
         </HeroParallax>
         <div className={styles.scrim} aria-hidden="true" />
 
@@ -27,11 +32,8 @@ export default function HomePage() {
 
         <div className={styles.heroBottom}>
           <div className={styles.heroCopy}>
-            <h1 className={`display ${styles.h1}`}>{SITE.tagline}</h1>
-            <p className={styles.lede}>
-              Freelance sports videographer. AFL, NRL and football across Sydney
-              — shot, cut and delivered before the conversation moves on.
-            </p>
+            <h1 className={`display ${styles.h1}`}>{site.tagline}</h1>
+            <p className={styles.lede}>{site.lede}</p>
           </div>
           <Link href="/contact" className="btn btn-primary">
             Book a shoot <span aria-hidden="true">→</span>
@@ -39,7 +41,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Ticker />
+      <Ticker clubs={clubs} />
 
       <section className={styles.work}>
         <div className={styles.workHead}>
@@ -49,7 +51,7 @@ export default function HomePage() {
           </Link>
         </div>
         <div className={cards.grid}>
-          {FEATURED.map((project) => (
+          {featured.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>

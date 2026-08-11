@@ -3,22 +3,22 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { VideoFacade } from "@/components/VideoFacade";
 import {
-  ALL_PROJECTS,
   getNextProject,
   getProject,
+  getProjects,
   youTubeId,
-} from "@/content/projects";
+} from "@/lib/content";
 import styles from "./page.module.css";
 
 type Params = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return ALL_PROJECTS.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  return (await getProjects()).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProject(slug);
   if (!project) return {};
 
   return {
@@ -36,10 +36,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function ProjectPage({ params }: Params) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProject(slug);
   if (!project) notFound();
 
-  const next = getNextProject(slug);
+  const next = await getNextProject(slug);
   const videoId = youTubeId(project.video);
 
   return (
@@ -54,7 +54,7 @@ export default async function ProjectPage({ params }: Params) {
       <VideoFacade
         videoId={videoId}
         title={project.title}
-        poster={project.poster}
+        poster={project.poster ?? undefined}
         posterHint={project.posterHint}
       />
 
@@ -78,13 +78,13 @@ export default async function ProjectPage({ params }: Params) {
               {project.club}
             </dd>
           </div>
-          {project.delivered.trim() && (
+          {project.delivered?.trim() && (
             <div className={styles.spec}>
               <dt className="eyebrow">Delivered</dt>
               <dd className={styles.specValue}>{project.delivered}</dd>
             </div>
           )}
-          {project.turnaround.trim() && (
+          {project.turnaround?.trim() && (
             <div className={styles.spec}>
               <dt className="eyebrow">Turnaround</dt>
               <dd className={styles.specValue}>{project.turnaround}</dd>

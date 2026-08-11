@@ -203,16 +203,11 @@ svg {
 
 /* ── Motion ───────────────────────────────────────────────────────────────
    Both animations are decorative. Anyone who has asked their OS to calm
-   things down gets a static ticker and no entrance fade. */
+   things down gets a static ticker and no entrance fade.
 
-@keyframes ticker {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
+   The ticker's keyframes live in Ticker.module.css, not here: CSS Modules
+   rewrites `animation-name` to a scoped identifier, so a module class can
+   only reach keyframes declared in that same module. */
 
 @keyframes fadeUp {
   from {
