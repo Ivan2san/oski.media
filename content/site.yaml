@@ -9,14 +9,14 @@ description: >-
 email: hello@oski.media
 socials:
   - label: Instagram
-    handle: "@oski.media"
+    handle: '@oski.media'
     href: https://instagram.com/oski.media
   - label: YouTube
-    handle: "@oski.media"
+    handle: '@oski.media'
     href: https://youtube.com/@oski.media
   - label: LinkedIn
     handle: oski-media
     href: https://linkedin.com/in/oski-media
-portrait: null
-showreelPoster: /images/showreel-poster.webp
-showreel: /video/showreel-loop.mp4
+portrait: /images/portrait.PNG
+showreelPoster: /images/showreelPoster.webp
+showreel: /video/showreel.mp4
