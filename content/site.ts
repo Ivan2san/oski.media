@@ -21,14 +21,53 @@ export const SITE = {
 } as const;
 
 /**
- * The two one-off images that aren't tied to a project. Drop the file into
- * /public/images, uncomment the line, done — until then both slots render a
- * labelled placeholder instead of a broken image.
+ * One-off images not tied to a project. Drop the file into /public/images,
+ * uncomment the line, done — until then the slot renders a labelled
+ * placeholder instead of a broken image.
  */
-export const IMAGES: { hero?: string; portrait?: string } = {
-  // hero: "/images/showreel-poster.jpg",
+export const IMAGES: { portrait?: string } = {
   // portrait: "/images/oski-portrait.jpg",
 };
+
+export type HeroPanel = {
+  sport: string;
+  alt: string;
+  /** Shown in the empty slot — this is what makes each panel self-labelling. */
+  hint: string;
+  src?: string;
+  /** The one panel that survives the mobile collapse. Exactly one. */
+  primary?: boolean;
+};
+
+/**
+ * The hero triptych — three codes, one shooter.
+ *
+ * Order is deliberate. The headline sits over the first panel and the scrim
+ * runs to 94% at the bottom, so panel one wants the quietest frame with dead
+ * space low in the composition. The loudest frame belongs in the centre,
+ * where nothing overlaps it. Full shot spec in public/images/README.md.
+ */
+export const HERO_PANELS: HeroPanel[] = [
+  {
+    sport: "Football",
+    alt: "Footballer striking the ball under floodlights",
+    hint: "Football — floodlit dusk, striking the ball",
+    // src: "/images/hero-football.webp",
+  },
+  {
+    sport: "AFL",
+    alt: "AFL player elevated for a pack mark",
+    hint: "AFL — pack mark, ball above the hands",
+    primary: true,
+    // src: "/images/hero-afl.webp",
+  },
+  {
+    sport: "NRL",
+    alt: "NRL player breaking a tackle",
+    hint: "NRL — contact, tight long lens",
+    // src: "/images/hero-nrl.webp",
+  },
+];
 
 export const NAV = [
   { href: "/work", label: "Work" },

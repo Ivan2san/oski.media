@@ -50,7 +50,10 @@ automatically when you introduce a new `code` or `type`. The route, sitemap
 entry, page metadata and "next project" link are all derived — nothing else to
 update.
 
-`content/site.ts` holds the email, socials, hero image and portrait.
+`content/site.ts` holds the email, socials, portrait and the hero triptych —
+three full-height panels, one per code (Football / AFL / NRL), split by
+hairline accent rules and collapsing to the centre panel alone below 700px.
+Panel order and shot spec are documented in `public/images/README.md`.
 
 ### Placeholders are deliberate
 

@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { HeroParallax } from "@/components/HeroParallax";
+import { HeroPanelLabels, HeroTriptych } from "@/components/HeroTriptych";
 import { ProjectCard } from "@/components/ProjectCard";
-import { Slot } from "@/components/Slot";
 import { Ticker } from "@/components/Ticker";
 import { FEATURED } from "@/content/projects";
-import { IMAGES, SITE } from "@/content/site";
+import { SITE } from "@/content/site";
 import cards from "@/components/ProjectCard.module.css";
 import styles from "./page.module.css";
 
@@ -13,15 +13,10 @@ export default function HomePage() {
     <main id="main">
       <section className={styles.hero}>
         <HeroParallax>
-          <Slot
-            src={IMAGES.hero}
-            alt="Sideline frame from a Sydney match day"
-            hint="Showreel poster frame — the muted loop plays over this"
-            sizes="100vw"
-            priority
-          />
+          <HeroTriptych />
         </HeroParallax>
         <div className={styles.scrim} aria-hidden="true" />
+        <HeroPanelLabels />
 
         <div className={styles.heroTop}>
           <span className={styles.live}>
