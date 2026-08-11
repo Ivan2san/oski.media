@@ -44,7 +44,10 @@ you use, and the sitemap, page metadata and "next project" link all follow. The
 project list is ordered by **date**, newest first — not by the order shown in
 the admin, which is alphabetical.
 
-Images uploaded through the admin land in `public/images/uploads/`.
+Images uploaded through the admin land in `public/images/`, alongside the
+hand-placed ones. They share a folder deliberately: Keystatic locates a file by
+stripping the field's `publicPath` off the stored value, so an asset outside
+that folder reads as *no image set* — silently, with the field looking empty.
 
 ### Editing locally
 

@@ -18,13 +18,20 @@ const storage =
  * `publicPath` is not optional in practice — without it Keystatic stores a
  * bare filename rather than a site-root path, and every image silently
  * renders broken. `directory` is where the file physically lands.
+ *
+ * These two must agree with the paths already in the content files. Keystatic
+ * strips `publicPath` off a stored value to find the file, so a value that
+ * doesn't start with it reads as *empty* — the field renders as though no
+ * image was ever set, with no error anywhere. Pointing at `public/images`
+ * rather than a separate uploads folder keeps hand-placed assets and uploads
+ * in one namespace, which is the only way both stay readable in the admin.
  */
 const uploadedImage = (label: string, description?: string) =>
   fields.image({
     label,
     description,
-    directory: "public/images/uploads",
-    publicPath: "/images/uploads/",
+    directory: "public/images",
+    publicPath: "/images/",
   });
 
 export default config({
@@ -187,15 +194,18 @@ export default config({
             itemLabel: (props) => props.fields.label.value || "Untitled",
           },
         ),
-        portrait: uploadedImage("About portrait", "4:5 works best."),
+        portrait: uploadedImage(
+          "About page photo",
+          "The big photo of you on the About page. Portrait orientation, 4:5 works best. Leave it empty and the page shows a labelled placeholder rather than a gap.",
+        ),
         showreelPoster: uploadedImage(
-          "Showreel poster frame",
-          "Held before the loop starts, and shown to anyone who prefers reduced motion. Export it from the first frame of the loop or there's a visible jump.",
+          "Hero image",
+          "The still behind the headline on the home page. Also the frame held before the hero video starts, so export it from the video's first frame or there's a visible jump. Landscape, roughly 16:9.",
         ),
         showreel: fields.file({
-          label: "Showreel loop",
+          label: "Hero video",
           description:
-            "Silent, roughly 16:9, under about 1MB — it autoplays on every first visit. Must start and end on the same frame or the loop point reads as a glitch.",
+            "Optional. A silent loop that plays over the hero image — remove it and the hero image is used on its own. Roughly 16:9, under about 1MB since it loads on every first visit. Must start and end on the same frame or the loop point reads as a glitch.",
           directory: "public/video",
           publicPath: "/video/",
         }),
