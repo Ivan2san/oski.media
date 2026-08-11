@@ -62,20 +62,23 @@ so you can publish before the assets exist. See `public/images/README.md`.
 ## Contact form
 
 Posts to [Formspree](https://formspree.io) as JSON so the visitor stays on the
-page. One env var:
+page and gets the designed "Got it" state.
+
+`NEXT_PUBLIC_FORMSPREE_ID` is already set in Vercel across production, preview
+and development — it's the `mqeokozk` in `formspree.io/f/mqeokozk`. To point
+the form at a different endpoint:
 
 ```bash
-NEXT_PUBLIC_FORMSPREE_ID=xxxxxxxx   # the part after /f/ in your endpoint URL
-```
-
-Set it in Vercel:
-
-```bash
+vercel env rm NEXT_PUBLIC_FORMSPREE_ID production
 vercel env add NEXT_PUBLIC_FORMSPREE_ID production
 ```
 
-Until it's set the submit button is disabled and the form says so — enquiries
-are never silently dropped. The email and social links work regardless.
+It's a `NEXT_PUBLIC_` value, so it ships in the client bundle — which is fine,
+a Formspree form id is a public endpoint, not a credential.
+
+For local dev, `vercel env pull .env.local` fetches it. If the variable is
+ever missing the submit button disables itself and says so, rather than
+silently dropping enquiries. The email and social links work regardless.
 
 ## Attaching the oski.media domain
 
@@ -101,6 +104,9 @@ app/
   work/[slug]/page.tsx  case study, generateStaticParams + generateMetadata
   services/ about/ contact/
   opengraph-image.tsx   share card, Archivo embedded from assets/fonts
+  icon.tsx              32px favicon — OM, white on black
+  apple-icon.tsx        180px home-screen icon
+  brand.ts              shared font loader + icon colours for the three above
   sitemap.ts robots.ts not-found.tsx
 components/             one .tsx + one .module.css each
 content/                projects.ts, site.ts — the only files content lives in

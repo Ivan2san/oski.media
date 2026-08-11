@@ -1,7 +1,6 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { SITE } from "@/content/site";
+import { archivo } from "./brand";
 
 export const alt = SITE.title;
 export const size = { width: 1200, height: 630 };
@@ -10,15 +9,6 @@ export const contentType = "image/png";
 const BG = "#0B0B0C";
 const INK = "#F2F1ED";
 const ACCENT = "#FFD100";
-
-/**
- * Satori ships no fonts and cannot read woff2, so the .woff files live in
- * assets/fonts and are inlined at build time. Without them the card falls
- * back to a system sans and loses the wordmark entirely.
- */
-async function archivo(weight: 400 | 800) {
-  return readFile(join(process.cwd(), "assets", "fonts", `archivo-${weight}.woff`));
-}
 
 /** The share card: wordmark in its viewfinder brackets over the tagline. */
 export default async function OpengraphImage() {
