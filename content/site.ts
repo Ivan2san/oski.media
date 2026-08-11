@@ -42,24 +42,33 @@ export type HeroPanel = {
 /**
  * The hero triptych — three codes, one shooter.
  *
- * Order is deliberate. The headline sits over the first panel and the scrim
- * runs to 94% at the bottom, so panel one wants the quietest frame with dead
- * space low in the composition. The loudest frame belongs in the centre,
- * where nothing overlaps it. Full shot spec in public/images/README.md.
+ * Order is a layout decision, not a ranking of the sports.
+ *
+ * The headline covers the left panel's whole middle and the scrim runs to
+ * 94% at the bottom, so a subject-led frame there is simply lost — that slot
+ * wants texture: a floodlit empty pitch, a dark grandstand, a crowd.
+ *
+ * The centre panel is the only one nothing overlaps, and the only one kept
+ * below 700px, so it takes the strongest frame available. Right sits under
+ * the CTA and reads clearly down to about two thirds height.
+ *
+ * Full shot spec in public/images/README.md.
  */
 export const HERO_PANELS: HeroPanel[] = [
   {
-    sport: "Football",
-    alt: "Footballer striking the ball under floodlights",
-    hint: "Football — floodlit dusk, striking the ball",
-    // src: "/images/hero-football.webp",
-  },
-  {
     sport: "AFL",
     alt: "AFL player elevated for a pack mark",
-    hint: "AFL — pack mark, ball above the hands",
-    primary: true,
+    hint: "AFL — wide, floodlit, texture over subject",
     // src: "/images/hero-afl.webp",
+  },
+  {
+    sport: "Football",
+    alt: "Footballer striking the ball under floodlights at night",
+    hint: "Football — floodlit dusk, striking the ball",
+    primary: true,
+    // Placeholder stock pending Oski's own frame — credit in
+    // public/images/README.md.
+    src: "/images/hero-football.webp",
   },
   {
     sport: "NRL",

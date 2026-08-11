@@ -51,9 +51,11 @@ entry, page metadata and "next project" link are all derived — nothing else to
 update.
 
 `content/site.ts` holds the email, socials, portrait and the hero triptych —
-three full-height panels, one per code (Football / AFL / NRL), split by
+three full-height panels, one per code (AFL / Football / NRL), split by
 hairline accent rules and collapsing to the centre panel alone below 700px.
-Panel order and shot spec are documented in `public/images/README.md`.
+Panel order is a layout constraint rather than a ranking, and the centre panel
+currently holds a stock stand-in; both are explained in
+`public/images/README.md`.
 
 ### Placeholders are deliberate
 
