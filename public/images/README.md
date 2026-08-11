@@ -8,15 +8,16 @@ Prefer `.webp` for stills; `next/image` handles the rest.
 
 ## Hero showreel
 
-The hero is a silent looping cut, wired in `SHOWREEL` (`content/site.ts`):
+The hero is a silent looping cut, set under **Site settings → Showreel** in the
+admin. The current files are:
 
 | File | Purpose |
 | --- | --- |
 | `/public/video/showreel-loop.mp4` | The loop itself — muted, autoplaying, looping |
 | `/public/images/showreel-poster.webp` | First frame, held before playback starts |
 
-**Replacing it.** Export a real cut and overwrite both files; no code changes
-needed. Keep to these constraints:
+**Replacing it.** Upload a new cut and poster in the admin, or overwrite both
+files directly. Either way, no code changes. Keep to these constraints:
 
 - **Silent.** There is no audio track and no controls — browsers only autoplay
   muted video, and an unmuted hero is hostile anyway.
@@ -63,5 +64,7 @@ shirt.
 
 | Slot | Where to wire it | Suggested size |
 | --- | --- | --- |
-| Portrait | `IMAGES.portrait` in `content/site.ts` | 1200×1500 (4:5) |
-| Project posters | `poster:` on each entry in `content/projects.ts` | 1920×1080 (16:9) |
+| Portrait | Admin → Site settings → Portrait | 1200×1500 (4:5) |
+| Project posters | Admin → Projects → *entry* → Poster | 1920×1080 (16:9) |
+
+Uploads through the admin land in `public/images/uploads/`.

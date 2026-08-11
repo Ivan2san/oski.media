@@ -22,39 +22,39 @@ npm run build        # production build; all routes prerender
 npm run typecheck
 ```
 
-## Adding a project
+## Editing the site
 
-Everything on the site reads from two files. You should never need to touch a
-component to publish new work.
+Content is edited through a CMS at **[/keystatic](https://oski-media.vercel.app/keystatic)**.
+Sign in with GitHub — anyone with write access to this repo can edit. No code,
+no local setup, works on a phone.
 
-Open `content/projects.ts`, copy an existing block in `PROJECTS`, and edit it:
+Every save is a normal git commit, so the site's history *is* the edit history:
+you can see who changed what and revert anything.
 
-```ts
-{
-  slug: "round-14-highlights",        // becomes /work/round-14-highlights
-  title: "Round 14 Highlights",
-  club: "Marrickville FC",
-  code: "Football",                   // sport — becomes a filter chip
-  type: "Match day",                  // job kind — becomes a filter chip
-  featured: true,                     // show in the top 3 on the home page
-  video: "https://youtu.be/AbCdEfGhIjK",
-  blurb: "Two lines on what the job was and how fast it landed.",
-  delivered: "1× 2min cut, 4× vertical socials",
-  turnaround: "Same night",
-  poster: "/images/round-14.jpg",     // optional
-}
-```
+| What | Where in the admin |
+|---|---|
+| Projects — title, club, code, type, video, blurb, poster | **Projects** |
+| Services intro and the list of services | **Services** |
+| Clubs in the scrolling ticker | **Ticker clubs** |
+| Tagline, lede, email, socials, showreel and its poster | **Site settings** |
 
-Order in the array is the order on the site. New filter chips appear
-automatically when you introduce a new `code` or `type`. The route, sitemap
-entry, page metadata and "next project" link are all derived — nothing else to
-update.
+A few things are derived rather than typed: the URL comes from the title, the
+filter chips on `/work` appear automatically from the `code` and `type` values
+you use, and the sitemap, page metadata and "next project" link all follow. The
+project list is ordered by **date**, newest first — not by the order shown in
+the admin, which is alphabetical.
 
-`content/site.ts` holds the email, socials, portrait and the hero showreel —
-a silent looping cut behind the headline, held on a poster frame for anyone
-who prefers reduced motion or whose browser blocks autoplay. The current loop
-is a stand-in built from three stock frames, one per code; replacing it is two
-files and no code, documented in `public/images/README.md`.
+Images uploaded through the admin land in `public/images/uploads/`.
+
+### Editing locally
+
+`npm run dev`, then <http://localhost:3000/keystatic>. In development the admin
+writes straight to the files on disk with no GitHub sign-in, so you can draft
+against a branch and commit normally.
+
+Underneath, everything is YAML in `content/` — `content/projects/<slug>.yaml`,
+plus `services.yaml`, `clubs.yaml` and `site.yaml`. Editing those by hand is
+equivalent; the admin is a nicer front end for the same files.
 
 ### Placeholders are deliberate
 
@@ -62,6 +62,47 @@ Any slot without an image renders a labelled placeholder, and any project
 still on the `youtu.be/xxxxxxxxxxx` placeholder renders "video coming soon"
 instead of a dead embed. The site never shows a broken image or empty frame,
 so you can publish before the assets exist. See `public/images/README.md`.
+
+## Connecting the CMS to GitHub
+
+One-time setup. Until it's done, `/keystatic` returns a 503 explaining what's
+missing — the public site is unaffected either way, which is why the admin
+route is guarded rather than allowed to fail the build.
+
+Keystatic ships a wizard that does this automatically, but only in development
+mode with `storage.kind: "github"`. This project uses local storage in dev (so
+editing locally needs no GitHub App at all), and the wizard would create an App
+pointed at localhost anyway. Creating it by hand is quicker:
+
+1. **[Create the App](https://github.com/settings/apps/new)** —
+   name it `oski.media CMS`, homepage `https://oski-media.vercel.app`.
+2. **Callback URL** — `https://oski-media.vercel.app/api/keystatic/github/oauth/callback`
+3. Tick **Request user authorization (OAuth) during installation**.
+4. Under **Webhook**, untick **Active**. Keystatic doesn't use webhooks.
+5. **Repository permissions:**
+   - Contents — **Read and write** (the files, and the branches)
+   - Pull requests — **Read and write** (the admin can open a PR instead of
+     committing straight to `main`)
+   - Metadata — Read-only, ticked for you
+6. **Where can this GitHub App be installed** — *Only on this account*.
+7. Create it, then **Generate a client secret** and keep the page open.
+8. **Install App** → *Only select repositories* → `Ivan2san/oski.media`.
+
+Then set three variables in Vercel. Run these and paste each value when
+prompted — don't put secrets in a file that could be committed:
+
+```bash
+vercel env add KEYSTATIC_GITHUB_CLIENT_ID production      # Iv23... from the App page
+vercel env add KEYSTATIC_GITHUB_CLIENT_SECRET production  # the secret from step 7
+openssl rand -hex 40 | vercel env add KEYSTATIC_SECRET production
+```
+
+Redeploy, then open `/keystatic` and sign in. Repeat for `preview` if you want
+the admin on preview deployments too.
+
+Anyone who needs to edit must be a repo collaborator with **write** access
+(Settings → Collaborators). Keystatic acts as the signed-in person, so their
+own permissions apply and their name is on the commit.
 
 ## Contact form
 
