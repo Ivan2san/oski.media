@@ -77,31 +77,49 @@ mode with `storage.kind: "github"`. This project uses local storage in dev (so
 editing locally needs no GitHub App at all), and the wizard would create an App
 pointed at localhost anyway. Creating it by hand is quicker:
 
-1. **[Create the App](https://github.com/settings/apps/new)** —
-   name it `oski.media CMS`, homepage `https://oski-media.vercel.app`.
-2. **Callback URL** — `https://oski-media.vercel.app/api/keystatic/github/oauth/callback`
-3. Tick **Request user authorization (OAuth) during installation**.
-4. Under **Webhook**, untick **Active**. Keystatic doesn't use webhooks.
-5. **Repository permissions:**
-   - Contents — **Read and write** (the files, and the branches)
-   - Pull requests — **Read and write** (the admin can open a PR instead of
-     committing straight to `main`)
-   - Metadata — Read-only, ticked for you
-6. **Where can this GitHub App be installed** — *Only on this account*.
-7. Create it, then **Generate a client secret** and keep the page open.
-8. **Install App** → *Only select repositories* → `Ivan2san/oski.media`.
+**1. Create the App.** This link pre-fills every field — name, callback URL,
+permissions, webhook off. Open it, scroll to the bottom, *Create GitHub App*:
 
-Then set three variables in Vercel. Run these and paste each value when
-prompted — don't put secrets in a file that could be committed:
+<https://github.com/settings/apps/new?name=oski-media-cms&description=Content+editing+for+oski.media&url=https%3A%2F%2Foski-media.vercel.app&callback_urls%5B%5D=https%3A%2F%2Foski-media.vercel.app%2Fapi%2Fkeystatic%2Fgithub%2Foauth%2Fcallback&request_oauth_on_install=true&public=false&webhook_active=false&contents=write&pull_requests=write&metadata=read>
+
+App names are unique across all of GitHub, so if `oski-media-cms` is taken just
+change it — the name has no effect on anything. To fill the form by hand
+instead, the settings that matter are:
+
+- Callback URL — `https://oski-media.vercel.app/api/keystatic/github/oauth/callback`
+- **Request user authorization (OAuth) during installation** — ticked
+- Webhook **Active** — unticked. Keystatic doesn't use webhooks.
+- Contents — **Read and write** (the files, and the branches it makes)
+- Pull requests — **Read and write** (so the admin can open a PR instead of
+  committing straight to `main`)
+- Metadata — Read-only, ticked for you
+
+**2. Copy the credentials.** On the App page, note the **Client ID**
+(`Iv23...`), then *Generate a new client secret* and copy it — GitHub shows it
+once.
+
+**3. Install it.** Left sidebar → *Install App* → your account → *Only select
+repositories* → `Ivan2san/oski.media`.
+
+**4. Set three variables in Vercel.** Paste each when prompted rather than
+putting secrets in a file that could be committed:
 
 ```bash
-vercel env add KEYSTATIC_GITHUB_CLIENT_ID production      # Iv23... from the App page
-vercel env add KEYSTATIC_GITHUB_CLIENT_SECRET production  # the secret from step 7
+vercel env add KEYSTATIC_GITHUB_CLIENT_ID production      # Iv23... from step 2
+vercel env add KEYSTATIC_GITHUB_CLIENT_SECRET production  # the secret from step 2
 openssl rand -hex 40 | vercel env add KEYSTATIC_SECRET production
 ```
 
-Redeploy, then open `/keystatic` and sign in. Repeat for `preview` if you want
-the admin on preview deployments too.
+`KEYSTATIC_SECRET` is ours, not GitHub's — it signs the session cookie, so any
+long random value works.
+
+**5. Redeploy.** Env vars are read at build time, so the change needs a new
+deployment before `/keystatic` will let anyone in.
+
+The callback URL is fixed to the production domain, so the admin works on
+`oski-media.vercel.app` and not on preview deployments. That's usually what you
+want — editors shouldn't be committing from a preview. If the `oski.media`
+domain gets attached later, add its callback URL to the App at the same time.
 
 Anyone who needs to edit must be a repo collaborator with **write** access
 (Settings → Collaborators). Keystatic acts as the signed-in person, so their
