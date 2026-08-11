@@ -1,0 +1,73 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.card:hover {
+  background: var(--surface-hover);
+  border-top-color: var(--line-26);
+  color: var(--ink);
+}
+
+.poster {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.card img {
+  transition: transform 0.4s ease;
+}
+
+.card:hover img {
+  transform: scale(1.03);
+}
+
+.code {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  pointer-events: none;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(11, 11, 12, 0.72);
+  backdrop-filter: blur(6px);
+  padding: 5px 9px;
+  border-radius: 999px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px 17px 19px;
+}
+
+.title {
+  font-size: clamp(1.15rem, 1.9vw, 1.6rem);
+  line-height: 1;
+  letter-spacing: -0.005em;
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--ink-55);
+}
+
+/* The grid every project list shares. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
+  gap: clamp(16px, 2.2vw, 30px);
+}

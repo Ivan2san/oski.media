@@ -1,0 +1,51 @@
+.lockup {
+  position: relative;
+  display: inline-block;
+  padding: 0.42em 0.58em;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.tl,
+.tr,
+.bl,
+.br {
+  position: absolute;
+  width: 0.42em;
+  height: 0.42em;
+}
+
+.tl {
+  left: 0;
+  top: 0;
+  border-left: 2px solid var(--accent);
+  border-top: 2px solid var(--accent);
+}
+
+.tr {
+  right: 0;
+  top: 0;
+  border-right: 2px solid var(--accent);
+  border-top: 2px solid var(--accent);
+}
+
+.bl {
+  left: 0;
+  bottom: 0;
+  border-left: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+
+.br {
+  right: 0;
+  bottom: 0;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+
+.word {
+  font-variation-settings: "wdth" 62, "wght" 800;
+  letter-spacing: -0.005em;
+  font-size: 1em;
+  line-height: 1;
+}

@@ -1,0 +1,278 @@
+/* ── Tokens ───────────────────────────────────────────────────────────────
+   Lifted verbatim from the oski.media design prototype. Change a value here
+   and it changes everywhere; nothing hard-codes a hex outside this block. */
+
+:root {
+  --bg: #0b0b0c;
+  --surface: #131315;
+  --surface-hover: #191a1d;
+  --ink: #f2f1ed;
+  --accent: #ffd100;
+
+  /* Ink at reduced opacity — the prototype's rgba(242,241,237,x) ladder. */
+  --ink-85: rgba(242, 241, 237, 0.85);
+  --ink-72: rgba(242, 241, 237, 0.72);
+  --ink-66: rgba(242, 241, 237, 0.66);
+  --ink-62: rgba(242, 241, 237, 0.62);
+  --ink-55: rgba(242, 241, 237, 0.55);
+  --ink-50: rgba(242, 241, 237, 0.5);
+  --ink-42: rgba(242, 241, 237, 0.42);
+  --ink-34: rgba(242, 241, 237, 0.34);
+  --ink-32: rgba(242, 241, 237, 0.32);
+
+  --line: rgba(242, 241, 237, 0.1);
+  --line-12: rgba(242, 241, 237, 0.12);
+  --line-14: rgba(242, 241, 237, 0.14);
+  --line-22: rgba(242, 241, 237, 0.22);
+  --line-26: rgba(242, 241, 237, 0.26);
+  --line-28: rgba(242, 241, 237, 0.28);
+
+  /* Page gutter — every full-width section shares it. */
+  --gutter: clamp(18px, 4vw, 56px);
+  --radius-card: 4px;
+  --radius-tight: 3px;
+
+  --mono: ui-monospace, Menlo, Consolas, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  /* Footer sits at the bottom even on short pages (e.g. a 1-result filter). */
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* width:100% is load-bearing: a flex item with `margin: 0 auto` loses the
+   default cross-axis stretch, so without it every page with a centred
+   max-width shrink-wraps to its content. */
+body > main {
+  flex: 1 0 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--ink);
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Display type ─────────────────────────────────────────────────────────
+   Archivo is loaded as a variable font with the wdth axis. The prototype
+   leans on condensed widths (62–70) for every headline; these utilities keep
+   that consistent instead of repeating font-variation-settings per element. */
+
+.display {
+  font-family: var(--font-display), sans-serif;
+  font-variation-settings: "wdth" 62, "wght" 800;
+  text-transform: uppercase;
+  letter-spacing: -0.012em;
+  line-height: 0.88;
+}
+
+.display-64 {
+  font-variation-settings: "wdth" 64, "wght" 800;
+}
+
+.display-66 {
+  font-variation-settings: "wdth" 66, "wght" 700;
+}
+
+.display-68 {
+  font-variation-settings: "wdth" 68, "wght" 700;
+}
+
+.display-70 {
+  font-variation-settings: "wdth" 70, "wght" 700;
+}
+
+/* Small uppercase label — used for eyebrows, meta and nav. */
+.eyebrow {
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-42);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 56px;
+  padding: 0 30px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn-primary:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--line-28);
+  color: var(--ink);
+  height: 52px;
+  padding: 0 26px;
+  font-size: 12px;
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-sm {
+  height: 52px;
+  padding: 0 26px;
+  font-size: 12px;
+}
+
+/* ── Motion ───────────────────────────────────────────────────────────────
+   Both animations are decorative. Anyone who has asked their OS to calm
+   things down gets a static ticker and no entrance fade. */
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.35s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Screen-reader-only, for the skip link and icon-button labels. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+  color: var(--bg);
+}
