@@ -67,4 +67,6 @@ shirt.
 | Portrait | Admin → Site settings → Portrait | 1200×1500 (4:5) |
 | Project posters | Admin → Projects → *entry* → Poster | 1920×1080 (16:9) |
 
-Uploads through the admin land in `public/images/uploads/`.
+Uploads through the admin land in this folder too. Keep them here — Keystatic
+finds a file by stripping `/images/` off the stored path, so anything filed
+elsewhere reads as "no image set" in the admin.
