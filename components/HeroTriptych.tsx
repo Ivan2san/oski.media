@@ -8,10 +8,12 @@ const PANEL_SIZES = "(max-width: 700px) 100vw, 34vw";
  * Three codes, one shooter — full-height verticals split by hairline accent
  * rules. Goes inside <HeroParallax>, so it drifts with the scroll.
  *
- * Only the primary panel is eager. The other two are left to native lazy
- * loading, so when the mobile breakpoint hides them with display:none the
- * browser never fetches them at all; on desktop they're in the viewport at
- * load and fetch immediately anyway.
+ * All three panels are eager. Leaving the non-primary two to native lazy
+ * loading looked like a free win — display:none at the mobile breakpoint
+ * would mean they were never fetched — but Chrome would not reliably load
+ * them on desktop either, even sitting above the fold, so the hero rendered
+ * with two black columns. A hero that sometimes doesn't appear is not worth
+ * the ~200KB it saves on mobile.
  */
 export function HeroTriptych() {
   return (
@@ -27,7 +29,7 @@ export function HeroTriptych() {
             alt={panel.alt}
             hint={panel.hint}
             sizes={PANEL_SIZES}
-            priority={panel.primary}
+            priority
           />
         </div>
       ))}

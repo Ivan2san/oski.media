@@ -13,9 +13,9 @@ Uncomment the `src` line on each once the file is here.
 
 | Panel | File | Sport | Status |
 | --- | --- | --- | --- |
-| Left | `hero-afl.webp` | AFL | Empty — placeholder |
-| Centre | `hero-football.webp` | Football | Stock placeholder, see credit below |
-| Right | `hero-nrl.webp` | NRL | Empty — placeholder |
+| Left | `hero-afl.webp` | AFL | Stock stand-in — **CC BY, attribution required** |
+| Centre | `hero-football.webp` | Football | Stock stand-in |
+| Right | `hero-nrl.webp` | NRL | Stock stand-in |
 
 **Size:** roughly `1050×1870` (about 9:16). Don't supply 3:4 or wider — the
 panel renders around 1:2, so `object-fit: cover` trims the sides hard and a
@@ -44,21 +44,35 @@ Grade all three to one LUT so they read as a set: crushed blacks to sit on
 the `#FFD100` accent — when a kit clashes, pick a backlit frame where the
 player reads as a silhouette with a rim of light.
 
-### Credit — `hero-football.webp`
+### Credits
 
-Photo by **Diego Santacruz** on Pexels, free licence (commercial use permitted,
-attribution not required — credited here as good practice).
-https://www.pexels.com/photo/man-in-yellow-soccer-jersey-playing-football-on-football-field-12616082/
+All three are stand-ins pending Oski's own frames. Each was cropped to the
+panel's tall aspect and graded with ffmpeg to a shared look — saturation ~0.4,
+contrast ~1.2, shadows crushed, a touch warm. Brightness is set **per image**,
+because matching mean luminance is the wrong target: the football frame is a
+night shot with a bright subject on black, so the daylight frames need to keep
+enough highlight to survive the hero scrim.
 
-Cropped to 1050×1867 around the player and graded down with ffmpeg
-(`saturation 0.82, contrast 1.14, brightness -0.07`, shadows crushed) to sit on
-the dark palette.
+| File | Photographer | Licence | Source |
+| --- | --- | --- | --- |
+| `hero-afl.webp` | Jimmy Harris | **CC BY 2.0** | [Contested mark inside the Eagles' 50](https://commons.wikimedia.org/wiki/File:Contested_mark_inside_the_Eagles%27_50_(46721657).jpg) |
+| `hero-football.webp` | Diego Santacruz | Pexels licence | [Man in yellow soccer jersey](https://www.pexels.com/photo/man-in-yellow-soccer-jersey-playing-football-on-football-field-12616082/) |
+| `hero-nrl.webp` | Commander Keane | **CC0** | [Easts player tackled](https://commons.wikimedia.org/wiki/File:Easts_player_tackled_1a.jpg) |
 
-**This is a stand-in.** Free stock has essentially no genuine AFL, and its
-"rugby league" results are actually rugby union — which is why the other two
-panels are still empty. Replace all three with Oski's own frames when they
-exist; a sports videographer running stock is a credibility risk the first time
-a club recognises it. Note the small Coca-Cola sponsor mark on the shirt.
+**Attribution obligation.** `hero-afl.webp` is CC BY 2.0, which requires
+visible credit wherever it is published — this README is not enough on its own.
+Either add a credit line to the site while that image is in use, or swap it for
+an own-shot frame. The other two require nothing: Pexels waives attribution and
+CC0 is a public-domain dedication.
+
+**Why stand-ins at all.** Free stock has essentially no genuine AFL, and stock
+libraries' "rugby league" results are actually rugby union, which any Sydney
+club would spot instantly. Wikimedia Commons does have real Australian
+football and league photography, but it's daylight spectator work rather than
+the long-lens night look the site is built around. Replace all three when
+Oski's own frames exist — a sports videographer running stock is a credibility
+risk the first time a club recognises it. Note also the small Coca-Cola sponsor
+mark on the football shirt.
 
 ## Everything else
 

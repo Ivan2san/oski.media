@@ -8,7 +8,8 @@
 .track {
   display: flex;
   width: max-content;
-  animation: ticker 34s linear infinite;
+  /* Duration is set inline from the club count — see Ticker.tsx. */
+  animation: ticker var(--ticker-duration, 34s) linear infinite;
   font-size: 15px;
   letter-spacing: 0.04em;
   line-height: 1;

@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Sans } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { SITE } from "@/content/site";
+import { SITE, SOCIALS } from "@/content/site";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -70,7 +70,7 @@ const jsonLd = {
     addressRegion: SITE.region,
     addressCountry: SITE.country,
   },
-  sameAs: [SITE.instagram, SITE.tiktok],
+  sameAs: SOCIALS.map((social) => social.href),
   knowsAbout: [
     "Sports videography",
     "Match-day highlights",

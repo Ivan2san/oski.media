@@ -5,10 +5,6 @@ export const SITE = {
   description:
     "Freelance sports videographer in Sydney. AFL, NRL and football match-day highlights, social cutdowns and club promos — shot, cut and delivered before the conversation moves on.",
   email: "hello@oski.media",
-  instagram: "https://instagram.com/oski.media",
-  tiktok: "https://tiktok.com/@oski.media",
-  instagramHandle: "@oski.media",
-  tiktokHandle: "@oski.media",
   locality: "Sydney",
   region: "NSW",
   country: "AU",
@@ -19,6 +15,34 @@ export const SITE = {
    */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://oski-media.vercel.app",
 } as const;
+
+/**
+ * Social channels, in the order they appear in the footer, on the contact
+ * page and in the JSON-LD `sameAs`. Add or remove one here and all three
+ * follow.
+ *
+ * TODO: confirm the LinkedIn slug and YouTube handle — these are assumed
+ * from the brand name, not verified.
+ */
+export type Social = { label: string; handle: string; href: string };
+
+export const SOCIALS: Social[] = [
+  {
+    label: "Instagram",
+    handle: "@oski.media",
+    href: "https://instagram.com/oski.media",
+  },
+  {
+    label: "YouTube",
+    handle: "@oski.media",
+    href: "https://youtube.com/@oski.media",
+  },
+  {
+    label: "LinkedIn",
+    handle: "oski-media",
+    href: "https://linkedin.com/in/oski-media",
+  },
+];
 
 /**
  * One-off images not tied to a project. Drop the file into /public/images,
@@ -57,9 +81,11 @@ export type HeroPanel = {
 export const HERO_PANELS: HeroPanel[] = [
   {
     sport: "AFL",
-    alt: "AFL player elevated for a pack mark",
+    alt: "AFL players elevated in a contested marking pack",
     hint: "AFL — wide, floodlit, texture over subject",
-    // src: "/images/hero-afl.webp",
+    // Placeholder stock pending Oski's own frame — credit in
+    // public/images/README.md.
+    src: "/images/hero-afl.webp",
   },
   {
     sport: "Football",
@@ -72,9 +98,11 @@ export const HERO_PANELS: HeroPanel[] = [
   },
   {
     sport: "NRL",
-    alt: "NRL player breaking a tackle",
+    alt: "Rugby league ball carrier held up in a two-man tackle",
     hint: "NRL — contact, tight long lens",
-    // src: "/images/hero-nrl.webp",
+    // Placeholder stock pending Oski's own frame — credit in
+    // public/images/README.md.
+    src: "/images/hero-nrl.webp",
   },
 ];
 
