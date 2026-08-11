@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { SHOWREEL } from "@/content/site";
 import styles from "./HeroShowreel.module.css";
 
 /**
@@ -14,7 +13,13 @@ import styles from "./HeroShowreel.module.css";
  * JS never runs or the browser blocks playback, the poster is what shows —
  * so the hero always has something in it.
  */
-export function HeroShowreel() {
+export function HeroShowreel({
+  src,
+  poster,
+}: {
+  src?: string;
+  poster?: string;
+}) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -35,13 +40,29 @@ export function HeroShowreel() {
     sync();
     calm.addEventListener("change", sync);
     return () => calm.removeEventListener("change", sync);
-  }, []);
+  }, [src]);
+
+  if (!src) {
+    // No loop uploaded yet — the poster alone still fills the hero.
+    return (
+      <div
+        className={styles.video}
+        style={
+          poster
+            ? { backgroundImage: `url(${poster})`, backgroundSize: "cover" }
+            : undefined
+        }
+        aria-hidden="true"
+      />
+    );
+  }
 
   return (
     <video
       ref={ref}
+      key={src}
       className={styles.video}
-      poster={SHOWREEL.poster}
+      poster={poster}
       muted
       loop
       playsInline
@@ -49,7 +70,7 @@ export function HeroShowreel() {
       aria-hidden="true"
       tabIndex={-1}
     >
-      <source src={SHOWREEL.src} type="video/mp4" />
+      <source src={src} type="video/mp4" />
     </video>
   );
 }

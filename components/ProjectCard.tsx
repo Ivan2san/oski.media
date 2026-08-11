@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Slot } from "./Slot";
-import type { DecoratedProject } from "@/content/projects";
+import type { DecoratedProject } from "@/lib/content";
 import styles from "./ProjectCard.module.css";
 
 const CARD_SIZES = "(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 33vw";
@@ -10,7 +10,7 @@ export function ProjectCard({ project }: { project: DecoratedProject }) {
     <Link href={project.href} className={styles.card}>
       <div className={styles.poster}>
         <Slot
-          src={project.poster}
+          src={project.poster ?? undefined}
           alt={`${project.title} — ${project.club}`}
           hint={project.posterHint}
           sizes={CARD_SIZES}

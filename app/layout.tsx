@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Sans } from "next/font/google";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
-import { SITE, SOCIALS } from "@/content/site";
+import { getSite } from "@/lib/content";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -19,65 +17,48 @@ const plex = IBM_Plex_Sans({
   variable: "--font-body",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE.url),
-  title: {
-    default: SITE.title,
-    template: `%s — ${SITE.name}`,
-  },
-  description: SITE.description,
-  keywords: [
-    "sports videographer Sydney",
-    "match day highlights",
-    "AFL videographer",
-    "NRL videographer",
-    "football highlights Sydney",
-    "club social content",
-  ],
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    siteName: SITE.name,
-    title: SITE.title,
-    description: SITE.description,
-    url: SITE.url,
-    locale: "en_AU",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: SITE.title,
-    description: SITE.description,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSite();
+
+  return {
+    metadataBase: new URL(site.url),
+    title: { default: site.title, template: `%s — ${site.name}` },
+    description: site.description,
+    keywords: [
+      "sports videographer Sydney",
+      "match day highlights",
+      "AFL videographer",
+      "NRL videographer",
+      "football highlights Sydney",
+      "club social content",
+    ],
+    alternates: { canonical: "/" },
+    openGraph: {
+      type: "website",
+      siteName: site.name,
+      title: site.title,
+      description: site.description,
+      url: site.url,
+      locale: "en_AU",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: site.title,
+      description: site.description,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#0B0B0C",
   colorScheme: "dark",
 };
 
-/** Tells Google this is a real local operator, not a stock template. */
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: SITE.name,
-  description: SITE.description,
-  url: SITE.url,
-  email: SITE.email,
-  areaServed: { "@type": "City", name: "Sydney" },
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: SITE.locality,
-    addressRegion: SITE.region,
-    addressCountry: SITE.country,
-  },
-  sameAs: SOCIALS.map((social) => social.href),
-  knowsAbout: [
-    "Sports videography",
-    "Match-day highlights",
-    "Social video production",
-  ],
-};
-
+/**
+ * Deliberately bare. The site's chrome — header, footer, structured data —
+ * lives in the (site) route group so the Keystatic admin renders on its own
+ * terms rather than inside a marketing header.
+ */
 export default function RootLayout({
   children,
 }: {
@@ -85,18 +66,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-AU" className={`${archivo.variable} ${plex.variable}`}>
-      <body>
-        <a className="skip-link" href="#main">
-          Skip to content
-        </a>
-        <SiteHeader />
-        {children}
-        <SiteFooter />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

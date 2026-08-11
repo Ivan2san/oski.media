@@ -1,8 +1,8 @@
 import { ImageResponse } from "next/og";
-import { SITE } from "@/content/site";
+import { getSite } from "@/lib/content";
 import { archivo } from "./brand";
 
-export const alt = SITE.title;
+export const alt = "oski.media — Sydney sports videographer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -12,7 +12,11 @@ const ACCENT = "#FFD100";
 
 /** The share card: wordmark in its viewfinder brackets over the tagline. */
 export default async function OpengraphImage() {
-  const [regular, heavy] = await Promise.all([archivo(400), archivo(800)]);
+  const [regular, heavy, site] = await Promise.all([
+    archivo(400),
+    archivo(800),
+    getSite(),
+  ]);
   const corner = { position: "absolute" as const, width: 22, height: 22 };
 
   return new ImageResponse(
@@ -60,7 +64,7 @@ export default async function OpengraphImage() {
               maxWidth: 900,
             }}
           >
-            {SITE.tagline}
+            {site.tagline}
           </div>
           <div
             style={{

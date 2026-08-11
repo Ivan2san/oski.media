@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Slot } from "@/components/Slot";
-import { IMAGES } from "@/content/site";
+import { getSite } from "@/lib/content";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -11,14 +11,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const site = await getSite();
+
   return (
     <main id="main" className={`fade-up ${styles.page}`}>
       <div className={styles.row}>
         <div className={styles.portraitCol}>
           <div className={styles.portrait}>
             <Slot
-              src={IMAGES.portrait}
+              src={site.portrait}
               alt="Oski on the sideline with a camera"
               hint="Portrait — sideline, working, not posed"
               sizes="(max-width: 760px) 100vw, 520px"
