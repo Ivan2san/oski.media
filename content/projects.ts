@@ -134,12 +134,36 @@ export const SERVICES: Service[] = [
   },
 ];
 
-/** Clubs scrolling in the home-page ticker. */
+/**
+ * The home-page ticker: every senior NSW club across the three codes Oski
+ * shoots.
+ *
+ * This is the landscape he works in, NOT a client list — the ticker's
+ * accessible label says exactly that. Don't relabel it "clubs worked with"
+ * unless every name below is genuinely a client, or it becomes a claim he
+ * can't back.
+ */
 export const CLUBS = [
-  "Balmain Tigers",
-  "Sydney Uni AFC",
-  "Marrickville FC",
-  "Bankstown City FC",
+  // A-League Men — NSW
+  "Sydney FC",
+  "Western Sydney Wanderers",
+  "Macarthur FC",
+  "Central Coast Mariners",
+  "Newcastle Jets",
+  // AFL — NSW
+  "Sydney Swans",
+  "GWS Giants",
+  // NRL — NSW
+  "South Sydney Rabbitohs",
+  "Sydney Roosters",
+  "Canterbury-Bankstown Bulldogs",
+  "Parramatta Eels",
+  "Penrith Panthers",
+  "Cronulla-Sutherland Sharks",
+  "Manly Warringah Sea Eagles",
+  "St George Illawarra Dragons",
+  "Wests Tigers",
+  "Newcastle Knights",
 ];
 
 /* ── DERIVED ──────────────────────────────────────────────────────────── */

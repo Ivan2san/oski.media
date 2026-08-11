@@ -7,17 +7,46 @@
   background: var(--surface);
 }
 
+/* Two stacked gradients, because one wasn't enough once the hero carried a
+   real image: the bottom-up pass alone left the headline sitting on whatever
+   the footage happened to be doing. The left-to-right pass darkens the type
+   column specifically and leaves the right side of the frame open. */
 .scrim {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(
-    to top,
-    rgba(11, 11, 12, 0.94) 0%,
-    rgba(11, 11, 12, 0.55) 34%,
-    rgba(11, 11, 12, 0.1) 62%,
-    rgba(11, 11, 12, 0.45) 100%
-  );
+  background:
+    linear-gradient(
+      to right,
+      rgba(11, 11, 12, 0.94) 0%,
+      rgba(11, 11, 12, 0.82) 26%,
+      rgba(11, 11, 12, 0.42) 50%,
+      rgba(11, 11, 12, 0.1) 72%,
+      rgba(11, 11, 12, 0.3) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(11, 11, 12, 0.92) 0%,
+      rgba(11, 11, 12, 0.5) 38%,
+      rgba(11, 11, 12, 0.06) 66%,
+      /* Top band carries the showreel and location labels, and a crowd in
+         the frame behind them is bright enough to wash them out. */
+      rgba(11, 11, 12, 0.58) 100%
+    );
+}
+
+/* The headline goes full width on a phone, so a side gradient would protect
+   the wrong half — fall back to a single, stronger bottom-up pass. */
+@media (max-width: 720px) {
+  .scrim {
+    background: linear-gradient(
+      to top,
+      rgba(11, 11, 12, 0.95) 0%,
+      rgba(11, 11, 12, 0.78) 42%,
+      rgba(11, 11, 12, 0.3) 72%,
+      rgba(11, 11, 12, 0.5) 100%
+    );
+  }
 }
 
 .heroTop {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
-import { SITE } from "@/content/site";
+import { SITE, SOCIALS } from "@/content/site";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -27,22 +27,17 @@ export default function ContactPage() {
             <a href={`mailto:${SITE.email}`} className={`display display-66 ${styles.channel}`}>
               {SITE.email}
             </a>
-            <a
-              href={SITE.instagram}
-              target="_blank"
-              rel="me noopener"
-              className={`display display-66 ${styles.channel}`}
-            >
-              Instagram — {SITE.instagramHandle}
-            </a>
-            <a
-              href={SITE.tiktok}
-              target="_blank"
-              rel="me noopener"
-              className={`display display-66 ${styles.channel}`}
-            >
-              TikTok — {SITE.tiktokHandle}
-            </a>
+            {SOCIALS.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="me noopener"
+                className={`display display-66 ${styles.channel}`}
+              >
+                {social.label} — {social.handle}
+              </a>
+            ))}
             <span className={styles.travel}>
               Based in Sydney. Happy to travel for finals.
             </span>

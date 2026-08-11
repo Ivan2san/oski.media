@@ -1,64 +1,63 @@
-# Images
+# Images and video
 
-Drop real frames here, then point at them from `content/`. Any slot left empty
-renders a labelled placeholder — nothing breaks, so you can publish before the
-assets exist.
+Drop real assets here, then point at them from `content/`. Any image slot left
+empty renders a labelled placeholder — nothing breaks, so you can publish
+before the assets exist.
 
-Prefer `.webp`; `next/image` handles the rest.
+Prefer `.webp` for stills; `next/image` handles the rest.
 
-## Hero triptych
+## Hero showreel
 
-Three full-height vertical panels wired in `HERO_PANELS` (`content/site.ts`).
-Uncomment the `src` line on each once the file is here.
+The hero is a silent looping cut, wired in `SHOWREEL` (`content/site.ts`):
 
-| Panel | File | Sport | Status |
+| File | Purpose |
+| --- | --- |
+| `/public/video/showreel-loop.mp4` | The loop itself — muted, autoplaying, looping |
+| `/public/images/showreel-poster.webp` | First frame, held before playback starts |
+
+**Replacing it.** Export a real cut and overwrite both files; no code changes
+needed. Keep to these constraints:
+
+- **Silent.** There is no audio track and no controls — browsers only autoplay
+  muted video, and an unmuted hero is hostile anyway.
+- **Roughly 16:9**, 1280×720 is plenty. It sits behind a heavy scrim, so
+  resolution beyond 720p is wasted bytes.
+- **Under about 1MB.** It autoplays on every first visit. The current file is
+  494KB for 9.6s.
+- **Loop seamlessly** — start and end on the same frame, or the cut point
+  reads as a glitch every time round.
+- **Export a matching first frame** as the poster, or there's a jump when
+  playback starts.
+- **Keep the action right of centre.** The headline occupies the left of the
+  frame on desktop; anything important over there is lost behind type.
+
+Reduced-motion visitors never see it move — `HeroShowreel` only calls `play()`
+when the visitor hasn't asked their OS to calm animation down, so they get the
+poster held still. Same if autoplay is blocked or JS fails.
+
+### The current loop is a stand-in
+
+Three graded stock frames, one per code, cross-dissolving on a 9.6s seamless
+loop. Built with ffmpeg from the sources below, each cropped to 16:9 and graded
+to a shared look (saturation ~0.45, contrast ~1.2, shadows crushed, slightly
+warm) with brightness set per frame.
+
+| Code | Photographer | Licence | Source |
 | --- | --- | --- | --- |
-| Left | `hero-afl.webp` | AFL | Empty — placeholder |
-| Centre | `hero-football.webp` | Football | Stock placeholder, see credit below |
-| Right | `hero-nrl.webp` | NRL | Empty — placeholder |
+| AFL | Jimmy Harris | **CC BY 2.0** | [Contested mark inside the Eagles' 50](https://commons.wikimedia.org/wiki/File:Contested_mark_inside_the_Eagles%27_50_(46721657).jpg) |
+| Football | Diego Santacruz | Pexels licence | [Man in yellow soccer jersey](https://www.pexels.com/photo/man-in-yellow-soccer-jersey-playing-football-on-football-field-12616082/) |
+| NRL | Commander Keane | **CC0** | [Easts player tackled](https://commons.wikimedia.org/wiki/File:Easts_player_tackled_1a.jpg) |
 
-**Size:** roughly `1050×1870` (about 9:16). Don't supply 3:4 or wider — the
-panel renders around 1:2, so `object-fit: cover` trims the sides hard and a
-subject that isn't dead centre gets cut in half.
+**Attribution obligation.** The AFL frame is CC BY 2.0, which requires visible
+credit wherever it's published — this README is not enough on its own. Either
+add a credit line to the site while it's in use, or replace the loop with
+Oski's own footage. Pexels waives attribution and CC0 is a public-domain
+dedication, so the other two need nothing.
 
-### Panel order is a layout decision, not a ranking
-
-The headline covers the **left** panel's entire middle and the scrim runs to
-94% opacity at the bottom, so a subject-led frame there is simply lost. That
-slot wants texture — a floodlit empty pitch, a dark grandstand, a crowd. This
-was learned the hard way: the football action shot was originally on the left
-and disappeared behind the H1 completely.
-
-The **centre** panel is the only one nothing overlaps, and the only one kept
-below 700px, so it takes the strongest frame available. The **right** panel
-reads clearly down to about two thirds height, where the CTA sits.
-
-### Shooting
-
-Long lens, background thrown out. At a third of the viewport a busy background
-turns to mush; the subject has to carry the panel alone. Keep the subject
-centred horizontally — the sides get cropped.
-
-Grade all three to one LUT so they read as a set: crushed blacks to sit on
-`#0B0B0C`, desaturated with one warm note. Royal blue and red club strips fight
-the `#FFD100` accent — when a kit clashes, pick a backlit frame where the
-player reads as a silhouette with a rim of light.
-
-### Credit — `hero-football.webp`
-
-Photo by **Diego Santacruz** on Pexels, free licence (commercial use permitted,
-attribution not required — credited here as good practice).
-https://www.pexels.com/photo/man-in-yellow-soccer-jersey-playing-football-on-football-field-12616082/
-
-Cropped to 1050×1867 around the player and graded down with ffmpeg
-(`saturation 0.82, contrast 1.14, brightness -0.07`, shadows crushed) to sit on
-the dark palette.
-
-**This is a stand-in.** Free stock has essentially no genuine AFL, and its
-"rugby league" results are actually rugby union — which is why the other two
-panels are still empty. Replace all three with Oski's own frames when they
-exist; a sports videographer running stock is a credibility risk the first time
-a club recognises it. Note the small Coca-Cola sponsor mark on the shirt.
+Replace all three as soon as real footage exists. A sports videographer running
+stock in his own showreel is a credibility risk the first time a club
+recognises it. Note also the small Coca-Cola sponsor mark on the football
+shirt.
 
 ## Everything else
 

@@ -50,12 +50,11 @@ automatically when you introduce a new `code` or `type`. The route, sitemap
 entry, page metadata and "next project" link are all derived — nothing else to
 update.
 
-`content/site.ts` holds the email, socials, portrait and the hero triptych —
-three full-height panels, one per code (AFL / Football / NRL), split by
-hairline accent rules and collapsing to the centre panel alone below 700px.
-Panel order is a layout constraint rather than a ranking, and the centre panel
-currently holds a stock stand-in; both are explained in
-`public/images/README.md`.
+`content/site.ts` holds the email, socials, portrait and the hero showreel —
+a silent looping cut behind the headline, held on a poster frame for anyone
+who prefers reduced motion or whose browser blocks autoplay. The current loop
+is a stand-in built from three stock frames, one per code; replacing it is two
+files and no code, documented in `public/images/README.md`.
 
 ### Placeholders are deliberate
 
@@ -116,6 +115,7 @@ app/
 components/             one .tsx + one .module.css each
 content/                projects.ts, site.ts — the only files content lives in
 assets/fonts/           Archivo .woff for the OG card (Satori can't read woff2)
+public/video/           the hero showreel loop
 ```
 
 Design tokens (the palette, gutter, radii) are CSS custom properties at the
