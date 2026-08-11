@@ -53,58 +53,21 @@ export const IMAGES: { portrait?: string } = {
   // portrait: "/images/oski-portrait.jpg",
 };
 
-export type HeroPanel = {
-  sport: string;
-  alt: string;
-  /** Shown in the empty slot — this is what makes each panel self-labelling. */
-  hint: string;
-  src?: string;
-  /** The one panel that survives the mobile collapse. Exactly one. */
-  primary?: boolean;
-};
-
 /**
- * The hero triptych — three codes, one shooter.
+ * The hero bed — a silent looping cut, which is what the design called for
+ * all along ("Showreel · muted loop" is printed in the corner of the hero).
  *
- * Order is a layout decision, not a ranking of the sports.
- *
- * The headline covers the left panel's whole middle and the scrim runs to
- * 94% at the bottom, so a subject-led frame there is simply lost — that slot
- * wants texture: a floodlit empty pitch, a dark grandstand, a crowd.
- *
- * The centre panel is the only one nothing overlaps, and the only one kept
- * below 700px, so it takes the strongest frame available. Right sits under
- * the CTA and reads clearly down to about two thirds height.
- *
- * Full shot spec in public/images/README.md.
+ * The current file is a stand-in: three graded stock frames, one per code,
+ * cross-dissolving on a 9.6s seamless loop. Replace it with a real cut of
+ * Oski's own footage and nothing else needs to change — keep it silent,
+ * roughly 16:9, and under about a megabyte, since it autoplays on every
+ * first visit. Export a matching first frame as the poster so there's no
+ * jump when playback starts.
  */
-export const HERO_PANELS: HeroPanel[] = [
-  {
-    sport: "AFL",
-    alt: "AFL players elevated in a contested marking pack",
-    hint: "AFL — wide, floodlit, texture over subject",
-    // Placeholder stock pending Oski's own frame — credit in
-    // public/images/README.md.
-    src: "/images/hero-afl.webp",
-  },
-  {
-    sport: "Football",
-    alt: "Footballer striking the ball under floodlights at night",
-    hint: "Football — floodlit dusk, striking the ball",
-    primary: true,
-    // Placeholder stock pending Oski's own frame — credit in
-    // public/images/README.md.
-    src: "/images/hero-football.webp",
-  },
-  {
-    sport: "NRL",
-    alt: "Rugby league ball carrier held up in a two-man tackle",
-    hint: "NRL — contact, tight long lens",
-    // Placeholder stock pending Oski's own frame — credit in
-    // public/images/README.md.
-    src: "/images/hero-nrl.webp",
-  },
-];
+export const SHOWREEL = {
+  src: "/video/showreel-loop.mp4",
+  poster: "/images/showreel-poster.webp",
+} as const;
 
 export const NAV = [
   { href: "/work", label: "Work" },

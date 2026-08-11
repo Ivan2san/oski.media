@@ -1,0 +1,9 @@
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The loop is decoration behind the headline; the poster and the video
+     share the same framing so there's no jump when playback starts. */
+  background: var(--surface);
+  display: block;
+}

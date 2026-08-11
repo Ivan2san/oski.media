@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HeroParallax } from "@/components/HeroParallax";
-import { HeroPanelLabels, HeroTriptych } from "@/components/HeroTriptych";
+import { HeroShowreel } from "@/components/HeroShowreel";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Ticker } from "@/components/Ticker";
 import { FEATURED } from "@/content/projects";
@@ -13,10 +13,9 @@ export default function HomePage() {
     <main id="main">
       <section className={styles.hero}>
         <HeroParallax>
-          <HeroTriptych />
+          <HeroShowreel />
         </HeroParallax>
         <div className={styles.scrim} aria-hidden="true" />
-        <HeroPanelLabels />
 
         <div className={styles.heroTop}>
           <span className={styles.live}>
