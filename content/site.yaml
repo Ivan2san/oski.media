@@ -18,5 +18,8 @@ socials:
     handle: oski-media
     href: https://linkedin.com/in/oski-media
 portrait: null
-showreelPoster: /images/showreel-poster.webp
-showreel: /video/showreel-loop.mp4
+heroImages:
+  - /images/hero-afl.webp
+  - /images/hero-football.webp
+  - /images/hero-nrl.webp
+showreel: null

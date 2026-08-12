@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { HeroParallax } from "@/components/HeroParallax";
 import { HeroShowreel } from "@/components/HeroShowreel";
+import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Ticker } from "@/components/Ticker";
 import { getClubs, getFeatured, getSite } from "@/lib/content";
@@ -18,14 +19,20 @@ export default async function HomePage() {
     <main id="main">
       <section className={styles.hero}>
         <HeroParallax>
-          <HeroShowreel src={site.showreel} poster={site.showreelPoster} />
+          {/* Real footage wins when it exists; otherwise the images carry the
+              hero, cross-fading if there's more than one. */}
+          {site.showreel ? (
+            <HeroShowreel src={site.showreel} poster={site.heroImages[0]} />
+          ) : (
+            <HeroSlideshow images={site.heroImages} />
+          )}
         </HeroParallax>
         <div className={styles.scrim} aria-hidden="true" />
 
         <div className={styles.heroTop}>
           <span className={styles.live}>
             <span className={styles.pip} aria-hidden="true" />
-            Showreel · muted loop
+            {site.showreel ? "Showreel · muted loop" : "AFL · NRL · Football"}
           </span>
           <span className={styles.place}>Sydney, AU</span>
         </div>

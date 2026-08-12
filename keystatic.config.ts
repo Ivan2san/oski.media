@@ -198,14 +198,16 @@ export default config({
           "About page photo",
           "The big photo of you on the About page. Portrait orientation, 4:5 works best. Leave it empty and the page shows a labelled placeholder rather than a gap.",
         ),
-        showreelPoster: uploadedImage(
-          "Hero image",
-          "The still behind the headline on the home page. Also the frame held before the hero video starts, so export it from the video's first frame or there's a visible jump. Landscape, roughly 16:9.",
-        ),
+        heroImages: fields.array(uploadedImage("Image"), {
+          label: "Hero images",
+          description:
+            "The images behind the headline on the home page. Add one and it sits still; add two or more and they cross-fade on a loop, in this order. Landscape, roughly 16:9. They sit under a dark scrim with type over them, so pick frames with room to breathe — a busy centre fights the headline.",
+          itemLabel: (props) => props.value?.filename ?? "Image",
+        }),
         showreel: fields.file({
           label: "Hero video",
           description:
-            "Optional. A silent loop that plays over the hero image — remove it and the hero image is used on its own. Roughly 16:9, under about 1MB since it loads on every first visit. Must start and end on the same frame or the loop point reads as a glitch.",
+            "Optional, and usually empty. Real footage to play instead of the images above — the first hero image becomes its holding frame. Silent, roughly 16:9, under about 1MB since it loads on every first visit. Must start and end on the same frame or the loop point reads as a glitch.",
           directory: "public/video",
           publicPath: "/video/",
         }),
