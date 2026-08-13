@@ -19,7 +19,6 @@ socials:
     href: https://linkedin.com/in/oski-media
 portrait: /images/portrait.jpg
 heroImages:
-  - /images/hero-afl.webp
-  - /images/hero-football.webp
-  - /images/hero-nrl.webp
-showreel: null
+  - /images/heroImages/0.JPG
+  - /images/heroImages/1.JPG
+  - /images/heroImages/2.JPG
