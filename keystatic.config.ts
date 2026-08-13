@@ -120,6 +120,17 @@ export default config({
           label: "Turnaround",
           description: "e.g. Same night",
         }),
+        quote: fields.text({
+          label: "Client quote",
+          description:
+            "One or two lines the club actually said about this job. Their words, not a tidied-up version of them — a quote nobody quite said is worth less than no quote at all. Leave it empty and the case study simply doesn't show one.",
+          multiline: true,
+        }),
+        quoteBy: fields.text({
+          label: "Who said it",
+          description:
+            "Name and role of the person quoted, e.g. Sam Rahme, Media Manager. An unattributed quote reads as invented, so fill this in whenever you fill in the quote above.",
+        }),
         poster: uploadedImage(
           "Poster frame",
           `16:9. Optional when there's a YouTube link — leave it empty and YouTube's own thumbnail is used. Set one to override that with a frame you've picked. ${SIZE_HINT}`,
@@ -143,6 +154,11 @@ export default config({
             num: fields.text({ label: "Number", description: "e.g. 01" }),
             name: fields.text({ label: "Name" }),
             line: fields.text({ label: "One-liner", multiline: true }),
+            price: fields.text({
+              label: "From price",
+              description:
+                "Free text on purpose, so it can read “from $650”, “POA”, or “depends on the fixture list”. It's the start of a conversation, not a rate card — but it's the first number people anchor to, so don't put one here you'd want to walk back. Leave it empty and the block shows no price.",
+            }),
             items: fields.array(fields.text({ label: "Bullet" }), {
               label: "Bullets",
               itemLabel: (props) => props.value,

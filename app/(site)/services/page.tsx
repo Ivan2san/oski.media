@@ -25,6 +25,13 @@ export default async function ServicesPage() {
             <h2 className={`display display-64 ${styles.name}`}>
               {service.name}
             </h2>
+            {/* Keystatic omits an unset text field from the YAML entirely, so
+                `price` reads back as "" and never undefined — the gate has to
+                be the string being non-blank, or an unpriced package renders
+                an empty element that still takes up the card's row gap. */}
+            {service.price.trim() && (
+              <p className={styles.price}>{service.price}</p>
+            )}
             <p className={styles.line}>{service.line}</p>
             <ul className={styles.items}>
               {service.items.map((item) => (

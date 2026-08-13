@@ -8,6 +8,7 @@ import {
   getProjects,
   youTubeId,
 } from "@/lib/content";
+import { SITE_STATIC } from "@/lib/site";
 import styles from "./page.module.css";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -41,6 +42,36 @@ export default async function ProjectPage({ params }: Params) {
 
   const next = await getNextProject(slug);
   const videoId = youTubeId(project.video);
+
+  /**
+   * The work is video, so video search is where it should be findable — and
+   * this page was emitting no structured data at all. Keyed off `videoId`
+   * rather than the raw field: the same parse that decides whether there's a
+   * real embed decides whether there's a video to describe, so a project with
+   * no link (or a placeholder one) claims nothing. It also normalises both
+   * link shapes Oski pastes — /watch?v= and /shorts/ — to one id.
+   */
+  const videoJsonLd = videoId
+    ? {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        name: project.title,
+        description: project.blurb,
+        // An uploaded poster is a site-root path, which is useless to a
+        // crawler; YouTube's own thumbnail is already absolute and URL()
+        // ignores the base when the input is. Omitted rather than guessed
+        // when there's no poster at all, since a 404 thumbnail invalidates
+        // the whole record.
+        ...(project.posterSrc && {
+          thumbnailUrl: new URL(project.posterSrc, SITE_STATIC.url).toString(),
+        }),
+        uploadDate: project.date,
+        contentUrl: `https://www.youtube.com/watch?v=${videoId}`,
+        // Canonical player URL. The facade embeds the youtube-nocookie alias
+        // of this same player, so it's the one video either way.
+        embedUrl: `https://www.youtube.com/embed/${videoId}`,
+      }
+    : null;
 
   return (
     <main id="main" className={`fade-up ${styles.page}`}>
@@ -93,6 +124,17 @@ export default async function ProjectPage({ params }: Params) {
         </dl>
       </div>
 
+      {/* All-or-nothing: an unattributed quote reads as invented, so a quote
+          with nobody behind it is worth less to a club than no quote at all. */}
+      {project.quote.trim() && project.quoteBy.trim() && (
+        <figure className={styles.testimonial}>
+          <blockquote className={`display display-68 ${styles.quote}`}>
+            &ldquo;{project.quote}&rdquo;
+          </blockquote>
+          <figcaption className={styles.quoteBy}>{project.quoteBy}</figcaption>
+        </figure>
+      )}
+
       <nav className={styles.footNav} aria-label="Project navigation">
         <Link href={next.href} className={styles.next}>
           <span className="eyebrow">Next project</span>
@@ -104,6 +146,18 @@ export default async function ProjectPage({ params }: Params) {
           Book a shoot
         </Link>
       </nav>
+
+      {/* Escaping `<` for the same reason the site layout does: the title and
+          blurb come from the CMS, and JSON.stringify won't neutralise a
+          literal `</script>` typed into a text field. */}
+      {videoJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(videoJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+      )}
     </main>
   );
 }

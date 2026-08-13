@@ -109,6 +109,27 @@
   color: var(--ink-85);
 }
 
+.testimonial {
+  margin-top: clamp(34px, 5vw, 66px);
+  border-top: 1px solid var(--line-12);
+  padding-top: clamp(22px, 3vw, 38px);
+}
+
+.quote {
+  max-width: 26ch;
+  font-size: clamp(1.3rem, 2.8vw, 2.1rem);
+  line-height: 1.04;
+  letter-spacing: -0.008em;
+}
+
+.quoteBy {
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+
 .footNav {
   margin-top: clamp(40px, 6vw, 84px);
   border-top: 1px solid var(--line-12);

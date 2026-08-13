@@ -53,7 +53,9 @@ export function ContactForm() {
       <div className={styles.done} role="status">
         <span className={`display display-64 ${styles.doneHead}`}>Got it</span>
         <span className={styles.doneLine}>
-          I&rsquo;ll come back to you today. If it&rsquo;s urgent, DM me and
+          You&rsquo;ll have a reply within 24 hours — same day if it landed
+          before the evening. If it&rsquo;s urgent, DM me or email{" "}
+          <a href="mailto:contact@oski.media">contact@oski.media</a> and
           I&rsquo;ll see it faster.
         </span>
       </div>
@@ -73,6 +75,10 @@ export function ContactForm() {
         />
       </label>
 
+      {/* The field name `email` is load-bearing, not cosmetic: Formspree reads
+          it as the reply-to address, which is what makes "reply" in the
+          notification go to the club and what the autoresponder sends to.
+          Renaming it to `from` or `contact` silently breaks both. */}
       <label className={styles.field}>
         <span className={styles.label}>Email</span>
         <input
@@ -104,6 +110,11 @@ export function ContactForm() {
           className={styles.textarea}
         />
       </label>
+
+      {/* Formspree reads `_subject` as the notification subject line. Without
+          it every enquiry arrives under the same generic Formspree subject,
+          which makes them unfilterable in Gmail. */}
+      <input type="hidden" name="_subject" value="New enquiry — oski.media" />
 
       {/* Formspree's honeypot: bots fill it, humans never see it. */}
       <input

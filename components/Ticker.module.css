@@ -15,10 +15,25 @@
 
 .rail {
   border-bottom: 1px solid var(--line);
-  overflow: hidden;
   padding: 16px 0;
   background: var(--bg);
-  /* Names dissolve at the edges rather than being guillotined by the crop. */
+}
+
+/* On the page gutter so it lines up with the hero headline above it. Type
+   comes from the global .eyebrow — same treatment as every other small label
+   on the site. */
+.caption {
+  padding: 0 var(--gutter);
+  margin-bottom: 12px;
+}
+
+/* The crop and the edge fade sit on this inner element, not on .rail: a mask
+   on the rail would take the caption with it, and the gutter is 18px on a
+   phone against an 80px fade, so the caption would be the part that
+   disappears. Names dissolve at the edges rather than being guillotined by
+   the crop. */
+.viewport {
+  overflow: hidden;
   mask-image: linear-gradient(
     to right,
     transparent,
