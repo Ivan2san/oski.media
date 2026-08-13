@@ -163,8 +163,11 @@ Posts to [Formspree](https://formspree.io) as JSON so the visitor stays on the
 page and gets the designed "Got it" state.
 
 `NEXT_PUBLIC_FORMSPREE_ID` is already set in Vercel across production, preview
-and development — it's the `mqeokozk` in `formspree.io/f/mqeokozk`. To point
-the form at a different endpoint:
+and development — it's the `myegjvnl` in `formspree.io/f/myegjvnl`. That form
+lives on the Formspree account registered to `contact@oski.media`, which is
+deliberate: it keeps this site's 50-submissions-a-month free tier separate from
+any other site's, and means the form can be handed over without handing over
+someone else's account. To point the form at a different endpoint:
 
 ```bash
 vercel env rm NEXT_PUBLIC_FORMSPREE_ID production
