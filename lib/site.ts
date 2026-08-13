@@ -8,11 +8,10 @@ export const SITE_STATIC = {
   region: "NSW",
   country: "AU",
   /**
-   * Canonical origin. Set NEXT_PUBLIC_SITE_URL in Vercel when the custom
-   * domain is attached; until then everything resolves against the
-   * production vercel.app URL.
+   * Canonical origin. NEXT_PUBLIC_SITE_URL is set in Vercel; this fallback
+   * only covers local dev and previews where it isn't.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://oski-media.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.oski.media",
 } as const;
 
 export const NAV = [

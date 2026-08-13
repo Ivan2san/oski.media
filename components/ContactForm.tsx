@@ -13,7 +13,7 @@ type Status = "idle" | "sending" | "sent" | "error";
  * (the part after /f/). Without it the form refuses to submit and says so,
  * rather than quietly dropping enquiries.
  */
-export function ContactForm() {
+export function ContactForm({ email }: { email: string }) {
   const formId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
@@ -55,8 +55,8 @@ export function ContactForm() {
         <span className={styles.doneLine}>
           You&rsquo;ll have a reply within 24 hours — same day if it landed
           before the evening. If it&rsquo;s urgent, DM me or email{" "}
-          <a href="mailto:contact@oski.media">contact@oski.media</a> and
-          I&rsquo;ll see it faster.
+          <a href={`mailto:${email}`}>{email}</a> and I&rsquo;ll see it
+          faster.
         </span>
       </div>
     );
