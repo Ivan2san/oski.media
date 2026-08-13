@@ -2,17 +2,18 @@ intro: >-
   Three ways clubs usually work with me. Most seasons end up a mix — tell me the
   fixture list and I'll put a quote together.
 items:
-  - num: "01"
+  - num: '01'
     name: Match-day coverage
     line: >-
       Sideline through to full time, with the highlights up while people are
       still talking.
+    price: From $550
     items:
       - Highlights cut, 90s–3min
       - Vertical socials for IG and TikTok
       - Stills selects for the club feed
       - Same-night or next-day delivery
-  - num: "02"
+  - num: '02'
     name: Social content packages
     line: >-
       A month of posts from one shoot day, sized and captioned for each
@@ -22,7 +23,7 @@ items:
       - Captions burned in for silent playback
       - Training, player and behind-the-scenes
       - Delivered as a scheduled drop folder
-  - num: "03"
+  - num: '03'
     name: Promo & ad production
     line: >-
       Membership drives, sponsor spots and season launches that look like
