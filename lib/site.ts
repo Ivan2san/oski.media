@@ -11,7 +11,7 @@ export const SITE_STATIC = {
    * Canonical origin. NEXT_PUBLIC_SITE_URL is set in Vercel; this fallback
    * only covers local dev and previews where it isn't.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://oski.media",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.oski.media",
 } as const;
 
 export const NAV = [
