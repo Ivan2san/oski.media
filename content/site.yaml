@@ -9,15 +9,15 @@ description: >-
 email: hello@oski.media
 socials:
   - label: Instagram
-    handle: "@oski.media"
+    handle: '@oski.media'
     href: https://instagram.com/oski.media
   - label: YouTube
-    handle: "@oski.media"
+    handle: '@oski.media'
     href: https://youtube.com/@oski.media
   - label: LinkedIn
     handle: oski-media
     href: https://linkedin.com/in/oski-media
-portrait: null
+portrait: /images/portrait.PNG
 heroImages:
   - /images/hero-afl.webp
   - /images/hero-football.webp

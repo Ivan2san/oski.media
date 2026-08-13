@@ -65,9 +65,10 @@ Replace all three as soon as real footage exists. A sports videographer running
 stock in his own hero is a credibility risk the first time a club recognises
 it. Note also the small Coca-Cola sponsor mark on the football shirt.
 
-The old `showreel-loop.mp4` and `showreel-poster.webp` are kept so the Hero
-video field has something to demonstrate, but nothing references them by
-default.
+`/video/showreel.mp4` is the same three frames baked into one loop by ffmpeg —
+the thing this change replaced. It stays in the repo so the Hero video field
+has something to demonstrate, but nothing points at it by default. Setting it
+looks nearly identical to the slideshow, because it *is* the same images.
 
 ## Everything else
 
