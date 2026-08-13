@@ -45,6 +45,18 @@
   letter-spacing: -0.008em;
 }
 
+/* Directly under the name, because the number is the one thing a treasurer is
+   scanning the page for. Accent yellow does the outranking rather than size:
+   the field is free text and can read "depends on the fixture list" as easily
+   as "from $650", so it has to survive wrapping. Mono for the same reason the
+   .num is mono — the display face would shout a sentence in condensed caps. */
+.price {
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--accent);
+}
+
 .line {
   font-size: 14.5px;
   line-height: 1.55;

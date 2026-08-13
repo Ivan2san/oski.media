@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { getSite } from "@/lib/content";
@@ -49,6 +50,11 @@ export default async function SiteLayout({
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
+      {/* Sits here rather than in the root layout so it only counts visitors.
+          The root layout also wraps /keystatic, and Oski editing his own site
+          would show up as traffic — a handful of daily CMS sessions is enough
+          to bend the numbers on a site this size. */}
+      <Analytics />
     </>
   );
 }

@@ -23,6 +23,15 @@ export type Project = {
   blurb: string;
   delivered: string;
   turnaround: string;
+  /**
+   * Both empty strings when unset — Keystatic omits an empty text field from
+   * the YAML entirely and reads a missing one back as "", so these are never
+   * undefined and callers gate on the string being non-blank, not on the key
+   * existing. A quote without `quoteBy` reads as invented, so treat the pair
+   * as all-or-nothing when rendering.
+   */
+  quote: string;
+  quoteBy: string;
   poster: string | null;
 };
 
@@ -118,7 +127,19 @@ export async function getFilters() {
   };
 }
 
-export async function getServices() {
+/** `price` is free text ("from $650", "POA"), and "" when Oski leaves it out. */
+export type ServiceItem = {
+  num: string;
+  name: string;
+  line: string;
+  price: string;
+  items: string[];
+};
+
+export async function getServices(): Promise<{
+  intro: string;
+  items: ServiceItem[];
+}> {
   const services = await reader.singletons.services.read();
   return {
     intro: services?.intro ?? "",
