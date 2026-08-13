@@ -49,6 +49,29 @@ hand-placed ones. They share a folder deliberately: Keystatic locates a file by
 stripping the field's `publicPath` off the stored value, so an asset outside
 that folder reads as *no image set* — silently, with the field looking empty.
 
+Oversized uploads are resized and re-encoded automatically about a minute
+after saving, by `.github/workflows/compress-images.yml`. Nothing needs
+preparing before upload.
+
+### Video
+
+**Video goes on YouTube, not in this repo.** Paste the link into a project's
+*YouTube link* field and the case study renders a poster-and-play-button
+facade — no player JS or cookies load until someone clicks. Unlisted videos
+work, so nothing has to be public on the channel.
+
+The thumbnail comes from YouTube automatically, so a poster frame only needs
+uploading to override it with a chosen frame.
+
+The one exception is the hero loop, which is a real file because it has to
+autoplay silently behind the headline. It must be tiny — under about 1MB. Git
+has no expiry and keeps every version of a binary forever, in the same
+repository the site builds from, so a full-length export committed once is
+there permanently. GitHub rejects any file over 100MB outright.
+
+Client masters are a separate problem with the opposite requirements — large
+and temporary. They belong in Drive, Dropbox or Frame.io, never here.
+
 ### Editing locally
 
 `npm run dev`, then <http://localhost:3000/keystatic>. In development the admin

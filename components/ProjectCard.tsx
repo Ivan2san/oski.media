@@ -10,7 +10,7 @@ export function ProjectCard({ project }: { project: DecoratedProject }) {
     <Link href={project.href} className={styles.card}>
       <div className={styles.poster}>
         <Slot
-          src={project.poster ?? undefined}
+          src={project.posterSrc}
           alt={`${project.title} — ${project.club}`}
           hint={project.posterHint}
           sizes={CARD_SIZES}

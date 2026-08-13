@@ -54,7 +54,7 @@ export default async function ProjectPage({ params }: Params) {
       <VideoFacade
         videoId={videoId}
         title={project.title}
-        poster={project.poster ?? undefined}
+        poster={project.posterSrc}
         posterHint={project.posterHint}
       />
 
