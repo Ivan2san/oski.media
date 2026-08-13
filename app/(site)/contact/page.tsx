@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Book a Sydney sports videographer for your season. Email contact@oski.media or send the fixture details and get a quote back the same day.",
+    "Book a Sydney sports videographer for your season. Send the fixture details and get a quote back the same day.",
   alternates: { canonical: "/contact" },
 };
 
@@ -47,7 +47,7 @@ export default async function ContactPage() {
         </div>
 
         <div className={styles.right}>
-          <ContactForm />
+          <ContactForm email={site.email} />
         </div>
       </div>
     </main>
