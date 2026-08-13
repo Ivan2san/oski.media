@@ -104,7 +104,7 @@ export default config({
         video: fields.url({
           label: "YouTube link",
           description:
-            "Full YouTube URL. Leave empty and the case study shows “video coming soon” instead of a dead embed.",
+            "Full YouTube URL — this is how video goes on the site. Unlisted videos work, so it doesn't have to be public on your channel. The thumbnail is taken from YouTube automatically, so you only need a poster frame below if you'd rather choose your own. Leave empty and the case study shows “video coming soon” instead of a dead embed.",
         }),
         blurb: fields.text({
           label: "Blurb",
@@ -122,7 +122,7 @@ export default config({
         }),
         poster: uploadedImage(
           "Poster frame",
-          `16:9. Leave empty and the card renders a labelled placeholder rather than a broken image. ${SIZE_HINT}`,
+          `16:9. Optional when there's a YouTube link — leave it empty and YouTube's own thumbnail is used. Set one to override that with a frame you've picked. ${SIZE_HINT}`,
         ),
       },
     }),
