@@ -9,10 +9,10 @@ description: >-
 email: hello@oski.media
 socials:
   - label: Instagram
-    handle: "@oski.media"
+    handle: '@oski.media'
     href: https://instagram.com/oski.media
   - label: YouTube
-    handle: "@oski.media"
+    handle: '@oski.media'
     href: https://youtube.com/@oski.media
   - label: LinkedIn
     handle: oski-media
@@ -23,3 +23,6 @@ heroImages:
   - /images/hero-football.webp
   - /images/hero-nrl.webp
 showreel: null
+portrait: /images/portrait.PNG
+showreelPoster: /images/showreelPoster.webp
+showreel: /video/showreel.mp4
