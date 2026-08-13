@@ -117,7 +117,10 @@ export async function getSite() {
     socials: (site?.socials ?? []) as readonly Social[],
     portrait: site?.portrait ?? undefined,
     showreel: site?.showreel ?? undefined,
-    showreelPoster: site?.showreelPoster ?? undefined,
+    /** One image holds still, several cross-fade. Order is the loop order. */
+    heroImages: (site?.heroImages ?? []).filter(
+      (src): src is string => Boolean(src),
+    ),
   };
 }
 

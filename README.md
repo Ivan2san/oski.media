@@ -36,7 +36,7 @@ you can see who changed what and revert anything.
 | Projects — title, club, code, type, video, blurb, poster | **Projects** |
 | Services intro and the list of services | **Services** |
 | Clubs in the scrolling ticker | **Ticker clubs** |
-| Tagline, lede, email, socials, showreel and its poster | **Site settings** |
+| Tagline, lede, email, socials, hero images, about photo | **Site settings** |
 
 A few things are derived rather than typed: the URL comes from the title, the
 filter chips on `/work` appear automatically from the `code` and `type` values

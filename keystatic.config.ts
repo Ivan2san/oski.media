@@ -34,6 +34,15 @@ const uploadedImage = (label: string, description?: string) =>
     publicPath: "/images/",
   });
 
+/**
+ * Appended to every image field. Uploads are shrunk automatically after they
+ * land (.github/workflows/compress-images.yml), so this is a nudge rather
+ * than a rule — but the original is kept in git history forever, and that
+ * part can't be undone after the fact.
+ */
+const SIZE_HINT =
+  "Straight off a phone or camera is fine — large uploads are resized automatically after saving.";
+
 export default config({
   storage,
 
@@ -113,7 +122,7 @@ export default config({
         }),
         poster: uploadedImage(
           "Poster frame",
-          "16:9. Leave empty and the card renders a labelled placeholder rather than a broken image.",
+          `16:9. Leave empty and the card renders a labelled placeholder rather than a broken image. ${SIZE_HINT}`,
         ),
       },
     }),
@@ -196,16 +205,18 @@ export default config({
         ),
         portrait: uploadedImage(
           "About page photo",
-          "The big photo of you on the About page. Portrait orientation, 4:5 works best. Leave it empty and the page shows a labelled placeholder rather than a gap.",
+          `The big photo of you on the About page. Portrait orientation, 4:5 works best. Leave it empty and the page shows a labelled placeholder rather than a gap. ${SIZE_HINT}`,
         ),
-        showreelPoster: uploadedImage(
-          "Hero image",
-          "The still behind the headline on the home page. Also the frame held before the hero video starts, so export it from the video's first frame or there's a visible jump. Landscape, roughly 16:9.",
-        ),
+        heroImages: fields.array(uploadedImage("Image"), {
+          label: "Hero images",
+          description:
+            `The images behind the headline on the home page. Add one and it sits still; add two or more and they cross-fade on a loop, in this order. Landscape, roughly 16:9. They sit under a dark scrim with type over them, so pick frames with room to breathe — a busy centre fights the headline. ${SIZE_HINT}`,
+          itemLabel: (props) => props.value?.filename ?? "Image",
+        }),
         showreel: fields.file({
           label: "Hero video",
           description:
-            "Optional. A silent loop that plays over the hero image — remove it and the hero image is used on its own. Roughly 16:9, under about 1MB since it loads on every first visit. Must start and end on the same frame or the loop point reads as a glitch.",
+            "Optional, and usually empty. Real footage to play instead of the images above — the first hero image becomes its holding frame. Silent, roughly 16:9, under about 1MB since it loads on every first visit. Must start and end on the same frame or the loop point reads as a glitch.",
           directory: "public/video",
           publicPath: "/video/",
         }),

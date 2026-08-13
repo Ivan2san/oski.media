@@ -6,42 +6,48 @@ before the assets exist.
 
 Prefer `.webp` for stills; `next/image` handles the rest.
 
-## Hero showreel
+## The hero
 
-The hero is a silent looping cut, set under **Site settings → Showreel** in the
-admin. The current files are:
+Set under **Site settings → Hero images** in the admin. The number of images
+decides the behaviour, so there's no switch to find:
 
-| File | Purpose |
+| Images | What happens |
 | --- | --- |
-| `/public/video/showreel-loop.mp4` | The loop itself — muted, autoplaying, looping |
-| `/public/images/showreel-poster.webp` | First frame, held before playback starts |
+| One | Sits still. No timer runs at all. |
+| Two or more | Cross-fade on a loop, in the order listed. 5s hold, 2.5s dissolve. |
+| None | Labelled placeholder — the page still lays out correctly. |
 
-**Replacing it.** Upload a new cut and poster in the admin, or overwrite both
-files directly. Either way, no code changes. Keep to these constraints:
+**Hero video** overrides all of that when set: the video plays instead, and the
+first hero image becomes its holding frame. Leave it empty (the default) and
+the images run the hero.
 
-- **Silent.** There is no audio track and no controls — browsers only autoplay
-  muted video, and an unmuted hero is hostile anyway.
-- **Roughly 16:9**, 1280×720 is plenty. It sits behind a heavy scrim, so
-  resolution beyond 720p is wasted bytes.
-- **Under about 1MB.** It autoplays on every first visit. The current file is
-  494KB for 9.6s.
-- **Loop seamlessly** — start and end on the same frame, or the cut point
-  reads as a glitch every time round.
-- **Export a matching first frame** as the poster, or there's a jump when
-  playback starts.
+Constraints either way:
+
+- **Roughly 16:9.** 1280×720 is plenty — everything sits behind a heavy scrim,
+  so resolution beyond 720p is wasted bytes.
 - **Keep the action right of centre.** The headline occupies the left of the
   frame on desktop; anything important over there is lost behind type.
+- **Video must be silent and under about 1MB.** Browsers only autoplay muted
+  video, and it loads on every first visit. It also needs to start and end on
+  the same frame or the loop point reads as a glitch.
 
-Reduced-motion visitors never see it move — `HeroShowreel` only calls `play()`
-when the visitor hasn't asked their OS to calm animation down, so they get the
-poster held still. Same if autoplay is blocked or JS fails.
+Reduced-motion visitors get the first image held still — the slideshow never
+starts its timer and `HeroShowreel` never calls `play()`. Same if JS fails or
+autoplay is blocked.
 
-### The current loop is a stand-in
+### The current images are stand-ins
 
-Three graded stock frames, one per code, cross-dissolving on a 9.6s seamless
-loop. Built with ffmpeg from the sources below, each cropped to 16:9 and graded
-to a shared look (saturation ~0.45, contrast ~1.2, shadows crushed, slightly
-warm) with brightness set per frame.
+Three graded stock frames, one per code. They were previously baked into a
+single 9.6s `.mp4`, which meant swapping any one of them needed ffmpeg; they're
+now three separate files Oski can replace individually in the admin. Each is
+cropped to 16:9 and graded to a shared look (saturation ~0.45, contrast ~1.2,
+shadows crushed, slightly warm).
+
+| File | Code |
+| --- | --- |
+| `hero-afl.webp` | AFL — contested mark |
+| `hero-football.webp` | Football — striker |
+| `hero-nrl.webp` | NRL — tackle |
 
 | Code | Photographer | Licence | Source |
 | --- | --- | --- | --- |
@@ -56,9 +62,13 @@ Oski's own footage. Pexels waives attribution and CC0 is a public-domain
 dedication, so the other two need nothing.
 
 Replace all three as soon as real footage exists. A sports videographer running
-stock in his own showreel is a credibility risk the first time a club
-recognises it. Note also the small Coca-Cola sponsor mark on the football
-shirt.
+stock in his own hero is a credibility risk the first time a club recognises
+it. Note also the small Coca-Cola sponsor mark on the football shirt.
+
+`/video/showreel.mp4` is the same three frames baked into one loop by ffmpeg —
+the thing this change replaced. It stays in the repo so the Hero video field
+has something to demonstrate, but nothing points at it by default. Setting it
+looks nearly identical to the slideshow, because it *is* the same images.
 
 ## Everything else
 

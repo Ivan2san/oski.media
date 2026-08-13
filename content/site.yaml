@@ -17,6 +17,9 @@ socials:
   - label: LinkedIn
     handle: oski-media
     href: https://linkedin.com/in/oski-media
-portrait: /images/portrait.PNG
-showreelPoster: /images/showreelPoster.webp
-showreel: /video/showreel.mp4
+portrait: /images/portrait.jpg
+heroImages:
+  - /images/hero-afl.webp
+  - /images/hero-football.webp
+  - /images/hero-nrl.webp
+showreel: null

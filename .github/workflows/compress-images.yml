@@ -1,0 +1,61 @@
+name: Compress images
+
+# Editors upload straight from a phone or camera, so this runs on whatever
+# lands and fixes it rather than asking them to prepare files first.
+on:
+  push:
+    paths:
+      - "public/images/**"
+
+# The job commits the shrunken files back to the branch it ran on.
+permissions:
+  contents: write
+
+# A quick succession of CMS saves would otherwise race each other's pushes.
+concurrency:
+  group: compress-images-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: node scripts/compress-images.mjs
+
+      - name: Commit the results
+        # Branch names reach the shell as an env var, never interpolated into
+        # the script, so a name containing shell metacharacters can't run.
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing to compress."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Compress uploaded images
+
+          Automated. Resizes anything over 2400px and converts photos saved as
+          PNG to JPEG, repointing content/ at the new paths. See
+          scripts/compress-images.mjs."
+
+          # Another save may have landed while this ran.
+          git pull --rebase origin "$BRANCH"
+          git push origin "HEAD:$BRANCH"
+
+          # Deliberately no [skip ci]: when a file is renamed, the deployed
+          # site still points at the old path until this commit ships.
