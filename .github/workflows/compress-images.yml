@@ -1,17 +1,30 @@
 name: Compress images
 
-# Editors upload straight from a phone or camera, so this runs on whatever
-# lands and fixes it rather than asking them to prepare files first.
+# Editors upload straight from a phone or camera, so this fixes whatever
+# lands rather than asking them to prepare files first.
+#
+# It runs overnight rather than on push, and that is not a cosmetic choice.
+# Keystatic saves with an expectedHeadOid; when the branch has moved it
+# quietly retries, but only if the files behind the open entry are untouched.
+# Rewriting an image the editor just uploaded is precisely the case it
+# refuses, answering with "This entry has been updated since it was opened.
+# Create a new branch to save changes." On push this job landed 27 seconds
+# after each save, so every follow-up edit to that entry demanded a branch.
+#
+# Overnight nobody has the admin open, so the rewrite is invisible. The cost
+# is that an oversized upload sits on the edge until the next run, which
+# changes nothing for visitors: next/image already serves a resized copy.
 on:
-  push:
-    paths:
-      - "public/images/**"
+  schedule:
+    # 16:00 UTC — about 2am in Sydney, either side of daylight saving.
+    - cron: "0 16 * * *"
+  workflow_dispatch:
 
 # The job commits the shrunken files back to the branch it ran on.
 permissions:
   contents: write
 
-# A quick succession of CMS saves would otherwise race each other's pushes.
+# Stops a manual run racing the scheduled one.
 concurrency:
   group: compress-images-${{ github.ref }}
   cancel-in-progress: false

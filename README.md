@@ -49,9 +49,18 @@ hand-placed ones. They share a folder deliberately: Keystatic locates a file by
 stripping the field's `publicPath` off the stored value, so an asset outside
 that folder reads as *no image set* — silently, with the field looking empty.
 
-Oversized uploads are resized and re-encoded automatically about a minute
-after saving, by `.github/workflows/compress-images.yml`. Nothing needs
-preparing before upload.
+Oversized uploads are resized and re-encoded automatically overnight, by
+`.github/workflows/compress-images.yml`. Nothing needs preparing before
+upload, and nothing changes for visitors in the meantime — `next/image`
+already serves a resized copy whatever the source.
+
+It runs on a schedule rather than on push for a specific reason. Keystatic
+saves with an `expectedHeadOid` and quietly retries when the branch has moved,
+but *not* when the files behind the open entry changed — it insists on a new
+branch instead. Rewriting an image the editor just uploaded is exactly that
+case, so an on-push job made every follow-up edit demand a branch. Use
+`npm run images` locally, or the workflow's manual trigger, to run it on
+demand.
 
 ### Video
 
